@@ -1,0 +1,527 @@
+================================================================
+  البصيرة الرقمية  ·  Digital Insight
+  HOW TO RUN THE PROJECT
+================================================================
+
+  English instructions first, then the same in Arabic.
+  التعليمات بالإنجليزي أولاً، وبعدها نفسها بالعربي.
+
+
+================================================================
+  PART 1 — ENGLISH
+================================================================
+
+WHAT THIS PROJECT IS
+--------------------
+A dashboard for a school specialist (الأخصائية) that flags
+elementary students who may need attention. It reads weekly data
+(grades + behavioral notes) for 30 students, runs a real AI agent
+over each one, and shows: alerts, student profiles, statistics,
+a weekly report, and a chat assistant called "سارة" (Sarah).
+
+All AI in this project runs on GOOGLE GEMINI only.
+
+
+BEFORE YOU START — is everything ready?
+---------------------------------------
+1. Your Gemini API key is already saved in the file  config.txt
+2. The Python libraries are already installed inside the folder
+   ".venv" in this same directory (google-genai + flask)
+
+If the .venv folder is ever missing or you move this project to
+another computer, recreate it with these two commands:
+
+    cd "/Users/developer/Downloads/ia_agent 9"
+    python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+
+NOTE: on this Mac you cannot install the libraries system-wide
+(Homebrew blocks it, error "externally-managed-environment").
+That is why we use .venv. You do NOT need to "activate" it —
+just write  ./.venv/bin/python  instead of  python3
+
+
+----------------------------------------------------------------
+OPTION A — FULL LOCAL RUN  (RECOMMENDED)
+Dashboard + Sarah chat + saving notes + report buttons
+----------------------------------------------------------------
+
+  Step 1) Open the Terminal app.
+
+  Step 2) Copy and paste this one line, then press Enter:
+
+    cd "/Users/developer/Downloads/ia_agent 9" && ./.venv/bin/python web_app.py
+
+  Step 3) You should see:
+            ✓ Gemini جاهز — النموذج: gemini-3.5-flash-lite
+            السيرفر شغّال محلياً على: http://localhost:5050
+
+          (We use port 5050, not the usual 5000, because macOS
+           reserves port 5000 for its AirPlay Receiver service and
+           it would answer with a 403 error instead of your app.)
+
+  Step 4) Open Chrome and go to:   http://localhost:5050
+
+  Step 5) Login screen: type any name → it opens the dashboard.
+          (The login is a mockup on purpose — any input works.)
+
+  Step 6) LEAVE THE TERMINAL WINDOW OPEN while you use the site.
+          To stop the server press  Ctrl + C  in the Terminal.
+
+  Everything works in this mode: Sarah answers, manual notes are
+  saved to the server, and the accept/reject/edit report buttons
+  are saved too.
+
+
+----------------------------------------------------------------
+OPTION B — QUICK LOOK, NO SERVER
+----------------------------------------------------------------
+
+  Just double-click the file  app.html  to open it in Chrome.
+
+  This shows the dashboard, students, statistics and the report.
+
+  IMPORTANT LIMITATION: in this mode the page is not connected to
+  any server, so these three things will NOT work:
+      - Sarah's chat (it will say it cannot reach the server)
+      - saving a manual note on a student
+      - the accept / reject / edit report buttons
+  Use Option A if you need those. Printing the report works fine.
+
+
+----------------------------------------------------------------
+OPTION C — PUBLISH ONLINE (a real public link)
+----------------------------------------------------------------
+
+  This is the option to use if the professor wants a real URL that
+  works from any device, with nothing running on your laptop.
+  We use PythonAnywhere (free plan).
+
+  1) Go to pythonanywhere.com and create a free "Beginner" account.
+
+  2) Open the "Files" tab and upload these FIVE files into one
+     folder:
+         web_app.py
+         app_agent.py
+         app_template.html
+         students_data_elementary.csv
+         requirements.txt
+
+     DO NOT upload  config.txt  (it has your secret key).
+     DO NOT upload  the .venv folder (it is only for your Mac).
+
+  3) Open the "Web" tab → "Add a new web app" → choose Flask →
+     choose any Python 3.x version → point the path to web_app.py
+
+  4) Still in the "Web" tab → find "Environment variables" → add:
+         Name:  GEMINI_API_KEY
+         Value: (your real key, the same one inside config.txt)
+
+  5) Open the "Consoles" tab → start a new "Bash console" → type:
+         pip3.10 install --user -r requirements.txt
+     (change 3.10 to whichever Python version you chose in step 3)
+
+  6) Go back to the "Web" tab and press the green "Reload" button.
+
+  7) Your link is at the top of that page:
+         https://yourusername.pythonanywhere.com
+
+
+----------------------------------------------------------------
+REFRESHING THE AI ANALYSIS  (app_agent.py)
+----------------------------------------------------------------
+
+  The dashboard normally uses fast built-in rules to decide who is
+  red / orange / green. To have GEMINI itself write the analysis
+  text ("البصيرة الذكية") for all 30 students, run:
+
+    cd "/Users/developer/Downloads/ia_agent 9" && ./.venv/bin/python app_agent.py
+
+  What happens: the agent analyses each student on its own — it
+  fetches the records, calculates the grade trend, calculates the
+  behavioral severity, checks the correlation, then submits its
+  conclusion. It rewrites app.html with the results.
+
+  ⚠ THIS TAKES ABOUT 10 MINUTES. That is normal, not a freeze.
+  Your free Google plan allows only 15 requests per minute, and
+  each student costs about 5 requests. The program handles this
+  automatically: when it hits the limit it prints
+      ⏳ حد الحصة المجانية — انتظار 32 ثانية...
+  waits, and continues. Just let it run to the end.
+
+  Run this again whenever you change the data in the CSV file.
+
+  ⚠ IMPORTANT — WHERE THE GEMINI TEXT APPEARS:
+  Running app_agent.py improves the analysis text inside app.html
+  (Option B). The live server (Option A / Option C) recalculates
+  the page on every visit using the fast built-in rules, so it
+  shows the shorter standard recommendation text instead.
+  So: if you want the professor to SEE Gemini's own written
+  analysis for each student, demo with app.html (Option B), or
+  ask us to connect the server to those saved results as well.
+  Sarah's chat always uses Gemini in every mode.
+
+
+----------------------------------------------------------------
+CHANGING THE STUDENT DATA
+----------------------------------------------------------------
+
+  Open  students_data_elementary.csv  (Excel or Numbers).
+  Columns:
+      student_id        - unique id, e.g. E131
+      name              - student name
+      class_name        - الصف الأول ... الصف السادس
+      week              - week number 1..6
+      behavior_flag     - 1 if something was noticed, otherwise 0
+      behavior_category - نفسي / صحي / سلوكي  (only if flag = 1)
+      behavior_note     - short description of what was noticed
+      academic_score    - the grade that week, 0-100
+
+  Save as CSV (UTF-8), then reload the page (Option A) or re-run
+  app_agent.py to regenerate app.html.
+
+
+----------------------------------------------------------------
+CHANGING THE AI MODEL
+----------------------------------------------------------------
+
+  Open  app_agent.py  and edit the line near the top:
+
+      LLM_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
+
+  Tested alternatives with your key:
+      gemini-3.5-flash-lite  → current. Fast, ~4 seconds per student.
+      gemini-3.5-flash       → smarter but slow, ~47 seconds per student.
+      gemini-3.7-flash       → newest, sometimes returns "high demand".
+
+  Both the analysis engine and Sarah's chat use this same line.
+
+
+----------------------------------------------------------------
+TROUBLESHOOTING
+----------------------------------------------------------------
+
+  "command not found: python3"
+      Install Python from python.org, then try again.
+
+  "No module named flask" / "No module named google"
+      You used python3 instead of ./.venv/bin/python
+      Use the full command exactly as written above.
+
+  "Address already in use" (port 5050)
+      A server is already running. Close the other Terminal
+      window, or press Ctrl + C in it. You can also pick another
+      port:   PORT=5060 ./.venv/bin/python web_app.py
+
+  The browser shows 403 Forbidden / an empty page
+      You typed port 5000 instead of 5050. Port 5000 on macOS
+      belongs to AirPlay Receiver, not to this project.
+
+  Sarah says "الحصة المجانية لهذه الدقيقة امتلأت"
+      You sent too many messages in one minute (free plan limit
+      is 15/minute). Wait one minute and continue.
+
+  Sarah says "مفتاح GEMINI_API_KEY غير صالح"
+      The key in config.txt is wrong or expired. Get a new free
+      one from aistudio.google.com and paste it into config.txt.
+
+  Sarah says "النموذج مزحوم حالياً"
+      Google's servers are busy. Wait a few moments and retry.
+
+  The dashboard opens but Sarah / notes / report buttons do nothing
+      You opened app.html directly (Option B). Use Option A.
+
+  The microphone or voice does not work
+      Use Google Chrome. Voice uses Chrome's built-in speech
+      features and needs microphone permission.
+
+
+----------------------------------------------------------------
+SECURITY NOTES
+----------------------------------------------------------------
+
+  - config.txt contains your private API key. Never upload it to
+    GitHub, never send it in an open WhatsApp group, and do not
+    include it in the files you submit.
+  - The login screen is a mockup for demonstration only. It does
+    not really authenticate anyone.
+  - All 30 students are fictional test data.
+  - The system never gives a medical or psychological diagnosis.
+    The final decision always belongs to the human specialist.
+
+
+----------------------------------------------------------------
+FILES IN THIS FOLDER
+----------------------------------------------------------------
+
+  app.html                     ready-made page (Option B)
+  app_template.html            the template Python fills in
+  app_agent.py                 the AI engine + Gemini agent loop
+  web_app.py                   the full server (Option A and C)
+  chat_server.py               chat-only local server (see note)
+  students_data_elementary.csv the data for 30 students
+  config.txt                   your Gemini API key
+  requirements.txt             the required libraries
+  .venv/                       installed libraries (your Mac only)
+  manual_notes.json            notes you add (created on first use)
+  report_status.json           report accept/reject (created later)
+
+  NOTE about chat_server.py: it is an older, simpler alternative
+  that only serves the chat on port 8787. It does not work with
+  app.html as-is, because the page asks for "/chat" on its own
+  address. Use web_app.py (Option A) instead — it does everything.
+
+
+================================================================
+  الجزء الثاني — بالعربي
+================================================================
+
+وش هذا المشروع؟
+-----------------
+لوحة تحكم للأخصائية بمدرسة ابتدائية، ترصد الطلبة اللي يحتاجون
+انتباه. النظام يقرأ بيانات أسبوعية (درجات + ملاحظات سلوكية) لـ ٣٠
+طالب، ويشغّل وكيل ذكاء اصطناعي حقيقي على كل طالب، ويعرض: تنبيهات،
+ملفات الطلاب، إحصائيات، تقرير أسبوعي، وشات "سارة".
+
+كل الذكاء الاصطناعي بالمشروع على Google Gemini فقط.
+
+
+قبل ما تبدين
+--------------
+١) مفتاح Gemini محفوظ أصلاً بملف  config.txt
+٢) المكتبات مثبّتة أصلاً بمجلد  .venv  داخل نفس الفولدر
+
+لو انحذف مجلد .venv أو نقلتي المشروع لجهاز ثاني، أعيدي إنشاءه:
+
+    cd "/Users/developer/Downloads/ia_agent 9"
+    python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+
+ملاحظة: ما نقدر نثبّت المكتبات على بايثون الجهاز مباشرة (هوم‌برو
+يمنع ذلك)، عشان كذا نستخدم .venv. ما تحتاجين "تفعّلينه" — بس
+اكتبي  ./.venv/bin/python  بدل  python3
+
+
+----------------------------------------------------------------
+الخيار أ) التشغيل الكامل محلياً  (الأفضل)
+داشبورد + شات سارة + حفظ الملاحظات + أزرار التقرير
+----------------------------------------------------------------
+
+  ١) افتحي تطبيق Terminal
+
+  ٢) انسخي هذا السطر والصقيه واضغطي Enter:
+
+    cd "/Users/developer/Downloads/ia_agent 9" && ./.venv/bin/python web_app.py
+
+  ٣) بيطلع لك:
+        ✓ Gemini جاهز — النموذج: gemini-3.5-flash-lite
+        السيرفر شغّال محلياً على: http://localhost:5050
+
+     (نستخدم المنفذ 5050 مو 5000، لأن macOS يحجز 5000 لخدمة
+      AirPlay Receiver ويرد بخطأ 403 بدل ما يفتح مشروعنا.)
+
+  ٤) افتحي Chrome على العنوان:   http://localhost:5050
+
+  ٥) بشاشة الدخول اكتبي أي اسم ← تفتح الداشبورد
+     (شاشة الدخول نموذج توضيحي، أي بيانات تشتغل)
+
+  ٦) اتركي نافذة الـ Terminal مفتوحة طول ما تستخدمين الموقع.
+     لإيقاف السيرفر: اضغطي  Ctrl + C  بالـ Terminal
+
+  بهذا الوضع كل شي يشتغل: سارة ترد، والملاحظات تنحفظ فعلياً،
+  وأزرار قبول/رفض/تعديل التقرير تنحفظ بالسيرفر.
+
+
+----------------------------------------------------------------
+الخيار ب) عرض سريع بدون سيرفر
+----------------------------------------------------------------
+
+  بس اضغطي مرتين على ملف  app.html  ينفتح بالمتصفح.
+
+  بيعرض الداشبورد والطلاب والإحصائيات والتقرير.
+
+  تنبيه مهم: بهذا الوضع الصفحة مو متصلة بأي سيرفر، فهذي الثلاثة
+  ما راح تشتغل:
+      - شات سارة
+      - حفظ ملاحظة يدوية على طالب
+      - أزرار قبول / رفض / تعديل التقرير
+  لو تحتاجينها استخدمي الخيار أ. الطباعة تشتغل عادي.
+
+
+----------------------------------------------------------------
+الخيار ج) النشر أونلاين برابط حقيقي
+----------------------------------------------------------------
+
+  هذا المطلوب لو الدكتور يبي رابط يشتغل من أي جهاز بدون ما
+  يكون جهازك شغّال. نستخدم PythonAnywhere (الخطة المجانية).
+
+  ١) روحي pythonanywhere.com وسوّي حساب Beginner مجاني
+
+  ٢) من تبويب "Files" ارفعي هذي الملفات الخمسة بمجلد واحد:
+         web_app.py
+         app_agent.py
+         app_template.html
+         students_data_elementary.csv
+         requirements.txt
+
+     لا ترفعين  config.txt  (فيه مفتاحك السري)
+     لا ترفعين  مجلد .venv  (خاص بجهازك بس)
+
+  ٣) من تبويب "Web" ← "Add a new web app" ← اختاري Flask ←
+     اختاري أي نسخة بايثون 3.x ← وجّهي المسار لملف web_app.py
+
+  ٤) بنفس تبويب "Web" ← "Environment variables" ← أضيفي:
+         الاسم:  GEMINI_API_KEY
+         القيمة: مفتاحك الحقيقي (نفس اللي بملف config.txt)
+
+  ٥) من تبويب "Consoles" ← افتحي "Bash console" جديد واكتبي:
+         pip3.10 install --user -r requirements.txt
+     (غيّري 3.10 حسب النسخة اللي اخترتيها بخطوة ٣)
+
+  ٦) ارجعي لتبويب "Web" واضغطي الزر الأخضر "Reload"
+
+  ٧) رابطك جاهز فوق الصفحة:
+         https://اسم_حسابك.pythonanywhere.com
+
+
+----------------------------------------------------------------
+تحديث تحليل الذكاء الاصطناعي  (app_agent.py)
+----------------------------------------------------------------
+
+  الداشبورد عادةً يستخدم قواعد سريعة مدمجة عشان يحدد مين أحمر /
+  برتقالي / أخضر. لو تبين Gemini نفسه يكتب نص التحليل ("البصيرة
+  الذكية") لكل الـ ٣٠ طالب، شغّلي:
+
+    cd "/Users/developer/Downloads/ia_agent 9" && ./.venv/bin/python app_agent.py
+
+  وش يصير: الوكيل يحلل كل طالب بنفسه — يجيب سجله، يحسب اتجاه
+  الدرجات، يحسب شدة المؤشرات السلوكية، يفحص الترابط، ثم يقدّم
+  استنتاجه. وبالنهاية يعيد كتابة ملف app.html بالنتائج.
+
+  ⚠ يأخذ حوالي ١٠ دقايق. هذا طبيعي، مو تعليق بالجهاز.
+  الخطة المجانية من Google تسمح بـ ١٥ طلب بالدقيقة بس، وكل طالب
+  يكلّف تقريباً ٥ طلبات. البرنامج يتصرف تلقائياً: لما يوصل الحد
+  يطبع
+      ⏳ حد الحصة المجانية — انتظار 32 ثانية...
+  وينتظر ويكمل. خليه يكمل للآخر.
+
+  أعيدي تشغيله كل ما تغيّرين البيانات بملف CSV.
+
+  ⚠ مهم — وين يظهر نص Gemini؟
+  تشغيل app_agent.py يحسّن نص التحليل داخل ملف app.html (الخيار ب).
+  أما السيرفر (الخيار أ / ج) فيعيد حساب الصفحة مع كل زيارة بالقواعد
+  السريعة المدمجة، فيعرض النص القياسي المختصر بدلاً عنه.
+  يعني: لو تبين الدكتور يشوف تحليل Gemini المكتوب لكل طالب، اعرضي
+  من app.html (الخيار ب)، أو اطلبي منا نربط السيرفر بنفس النتائج
+  المحفوظة. شات سارة يستخدم Gemini بكل الأوضاع.
+
+
+----------------------------------------------------------------
+تغيير بيانات الطلاب
+----------------------------------------------------------------
+
+  افتحي  students_data_elementary.csv  ببرنامج Excel أو Numbers
+  الأعمدة:
+      student_id        - معرّف فريد، مثل E131
+      name              - اسم الطالب
+      class_name        - الصف الأول ... الصف السادس
+      week              - رقم الأسبوع ١ إلى ٦
+      behavior_flag     - ١ إذا فيه ملاحظة، وإلا ٠
+      behavior_category - نفسي / صحي / سلوكي (بس إذا الفلاق = ١)
+      behavior_note     - وصف مختصر للي انلاحظ
+      academic_score    - درجة ذاك الأسبوع من ١٠٠
+
+  احفظي بصيغة CSV (UTF-8)، ثم حدّثي الصفحة (الخيار أ) أو أعيدي
+  تشغيل app_agent.py عشان يتولد app.html من جديد.
+
+
+----------------------------------------------------------------
+تغيير نموذج الذكاء الاصطناعي
+----------------------------------------------------------------
+
+  افتحي ملف  app_agent.py  وعدّلي السطر اللي بالأعلى:
+
+      LLM_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite")
+
+  بدائل جرّبناها فعلياً بمفتاحك:
+      gemini-3.5-flash-lite  ← الحالي. سريع، ٤ ثواني للطالب.
+      gemini-3.5-flash       ← أذكى بس بطيء، ٤٧ ثانية للطالب.
+      gemini-3.7-flash       ← الأحدث، أحياناً يرجّع "مزحوم".
+
+  نفس السطر يستخدمه محرك التحليل وشات سارة معاً.
+
+
+----------------------------------------------------------------
+حل المشاكل
+----------------------------------------------------------------
+
+  "command not found: python3"
+      ثبّتي بايثون من python.org وأعيدي المحاولة.
+
+  "No module named flask" أو "No module named google"
+      كتبتي python3 بدل ./.venv/bin/python
+      استخدمي الأمر كامل مثل ما هو مكتوب فوق.
+
+  "Address already in use" (المنفذ 5050)
+      فيه سيرفر شغّال أصلاً. سكّري النافذة الثانية أو اضغطي
+      Ctrl + C فيها. وتقدرين تختارين منفذ ثاني:
+      PORT=5060 ./.venv/bin/python web_app.py
+
+  المتصفح يعطي 403 Forbidden أو صفحة فاضية
+      كتبتي المنفذ 5000 بدل 5050. المنفذ 5000 على الماك محجوز
+      لخدمة AirPlay Receiver، مو لمشروعنا.
+
+  سارة تقول "الحصة المجانية لهذه الدقيقة امتلأت"
+      أرسلتي رسائل كثيرة بدقيقة وحدة (الحد ١٥ بالدقيقة).
+      انتظري دقيقة وكملي.
+
+  سارة تقول "مفتاح GEMINI_API_KEY غير صالح"
+      المفتاح بملف config.txt غلط أو منتهي. احصلي على واحد
+      جديد مجاناً من aistudio.google.com وحطيه بالملف.
+
+  سارة تقول "النموذج مزحوم حالياً"
+      سيرفرات Google مشغولة. انتظري لحظات وأعيدي المحاولة.
+
+  الداشبورد يفتح بس سارة/الملاحظات/أزرار التقرير ما تشتغل
+      فتحتي app.html مباشرة (الخيار ب). استخدمي الخيار أ.
+
+  المايك أو الصوت ما يشتغل
+      استخدمي Google Chrome. الصوت يعتمد على خصائص Chrome
+      المدمجة ويحتاج إذن استخدام المايكروفون.
+
+
+----------------------------------------------------------------
+ملاحظات أمان
+----------------------------------------------------------------
+
+  - ملف config.txt فيه مفتاحك الخاص. لا ترفعينه على GitHub، ولا
+    ترسلينه بقروب واتساب مفتوح، ولا تضمّينه بالملفات اللي تسلمينها.
+  - شاشة تسجيل الدخول نموذج توضيحي فقط، ما تتحقق من أحد فعلياً.
+  - الـ ٣٠ طالب كلهم بيانات تجريبية وهمية.
+  - النظام ما يعطي تشخيص طبي أو نفسي أبداً. القرار النهائي دايماً
+    يرجع للأخصائية البشرية.
+
+
+----------------------------------------------------------------
+ملفات هذا المجلد
+----------------------------------------------------------------
+
+  app.html                     صفحة جاهزة للفتح (الخيار ب)
+  app_template.html            القالب اللي بايثون يعبّيه
+  app_agent.py                 محرك التحليل + حلقة وكيل Gemini
+  web_app.py                   السيرفر الكامل (الخيار أ و ج)
+  chat_server.py               سيرفر شات محلي فقط (اقرأي الملاحظة)
+  students_data_elementary.csv بيانات الـ ٣٠ طالب
+  config.txt                   مفتاح Gemini حقك
+  requirements.txt             المكتبات المطلوبة
+  .venv/                       المكتبات المثبّتة (لجهازك فقط)
+  manual_notes.json            ملاحظاتك اليدوية (ينشأ عند أول استخدام)
+  report_status.json           حالة التقرير (ينشأ لاحقاً)
+
+  ملاحظة عن chat_server.py: هذا بديل أقدم وأبسط، يشغّل الشات بس
+  على المنفذ 8787. ما يشتغل مع app.html كما هو، لأن الصفحة تطلب
+  "/chat" على عنوانها نفسه. استخدمي web_app.py (الخيار أ) —
+  يسوي كل شي.
+
+
+================================================================
+  آخر تحديث: 2026-08-26
+================================================================

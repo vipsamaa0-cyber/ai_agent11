@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# ملف المفتاح الحقيقي (سري) — لا يُرفع أبداً
+config.txt
+
+# ملفات تُنشأ تلقائياً وقت التشغيل (بيانات جلسة، مو كود)
+manual_notes.json
+report_status.json

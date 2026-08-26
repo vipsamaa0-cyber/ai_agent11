@@ -1,0 +1,10 @@
+# حطي مفتاح Google Gemini API هنا بدون علامات تنصيص، مثال:
+# GEMINI_API_KEY=AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#
+# احصلي على المفتاح مجاناً (بدون بطاقة بنكية) من: https://aistudio.google.com
+# اضغطي "Get API key" ← "Create API key"
+#
+# بعدين انسخي هذا الملف باسم config.txt وحطي مفتاحك الحقيقي فيه
+# (config.txt مستثنى من الرفع لجيت هاب تلقائياً عشان ما يطلع مفتاحك للعلن)
+
+GEMINI_API_KEY=

@@ -1,0 +1,2725 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>البصيرة الرقمية</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#f4f7f6;
+  --white:#ffffff;
+  --dark:#173a38;
+  --teal:#24736e;
+  --teal-dark:#14504c;
+  --teal-light:#e8f4f2;
+  --text:#263b39;
+  --muted:#71807d;
+  --line:#dce7e4;
+
+  --green:#2e8b62;
+  --green-bg:#e7f5ed;
+
+  --orange:#c77a19;
+  --orange-bg:#fff1dd;
+
+  --red:#c94b3c;
+  --red-bg:#fbe8e5;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,"Tahoma",sans-serif;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.page{
+  display:none;
+  min-height:100vh;
+}
+
+.page.active{
+  display:block;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+  text-align:center;
+  color:var(--teal-dark);
+}
+
+.logo-icon{
+  width:60px;
+  height:60px;
+  margin:auto;
+  border-radius:18px;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:29px;
+  margin-bottom:12px;
+}
+
+.logo h1{
+  margin:0;
+  font-size:28px;
+  font-weight:800;
+}
+
+.logo p{
+  margin:5px 0 0;
+  color:var(--teal);
+  font-size:14px;
+  font-weight:bold;
+}
+
+/* =========================
+   HOME
+========================= */
+
+#home{
+  align-items:center;
+  justify-content:center;
+  padding:25px;
+}
+
+.home-container{
+  width:100%;
+  max-width:1000px;
+  text-align:center;
+}
+
+.home-logo{
+  margin-bottom:35px;
+}
+
+.home-logo .logo-icon{
+  width:75px;
+  height:75px;
+  font-size:36px;
+}
+
+.home-logo h1{
+  font-size:38px;
+}
+
+.home-logo p{
+  font-size:17px;
+}
+
+.mission{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:25px;
+  max-width:720px;
+  margin:0 auto 35px;
+  box-shadow:0 8px 30px rgba(20,80,77,.05);
+}
+
+.mission-title{
+  color:var(--teal-dark);
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.mission p{
+  color:var(--muted);
+  line-height:1.9;
+  margin:0;
+}
+
+.early{
+  margin-top:15px;
+  background:var(--teal-light);
+  border-radius:12px;
+  padding:12px;
+  color:var(--teal-dark);
+  font-size:13px;
+  font-weight:bold;
+}
+
+.choose-title{
+  font-size:18px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.role-cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+  max-width:700px;
+  margin:auto;
+}
+
+.role-card{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:20px;
+  padding:28px 20px;
+  transition:.2s;
+  text-align:right;
+}
+
+.role-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--teal);
+  box-shadow:0 10px 30px rgba(20,80,77,.10);
+}
+
+.role-icon{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  margin-bottom:14px;
+}
+
+.role-card h3{
+  margin:0 0 6px;
+  color:var(--teal-dark);
+}
+
+.role-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-page{
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:100%;
+  max-width:400px;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:30px;
+  box-shadow:0 10px 35px rgba(20,80,77,.07);
+}
+
+.back{
+  background:none;
+  border:0;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.login-box h2{
+  margin:0 0 6px;
+  color:var(--teal-dark);
+}
+
+.login-sub{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  margin-bottom:6px;
+  color:var(--text);
+}
+
+.field input,
+.field select{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px;
+  background:#f8faf9;
+  outline:none;
+}
+
+.field input:focus{
+  border-color:var(--teal);
+}
+
+.primary{
+  width:100%;
+  border:0;
+  background:var(--teal);
+  color:white;
+  border-radius:11px;
+  padding:13px;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.primary:hover{
+  background:var(--teal-dark);
+}
+
+.demo{
+  background:var(--bg);
+  border-radius:10px;
+  padding:10px;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:15px;
+  line-height:1.7;
+}
+
+/* =========================
+   APP HEADER
+========================= */
+
+.app-header{
+  background:white;
+  border-bottom:1px solid var(--line);
+  padding:20px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.app-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.app-brand-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:var(--teal-light);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+}
+
+.app-brand strong{
+  display:block;
+  color:var(--teal-dark);
+}
+
+.app-brand span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.user-pill{
+  border:1px solid var(--line);
+  padding:8px 13px;
+  border-radius:30px;
+  font-size:12px;
+}
+
+.logout{
+  background:none;
+  border:0;
+  color:var(--red);
+  margin-right:10px;
+}
+
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:28px;
+}
+
+/* =========================
+   NAV
+========================= */
+
+.nav{
+  display:flex;
+  gap:8px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:25px;
+}
+
+.nav button{
+  border:0;
+  background:none;
+  padding:12px 10px;
+  color:var(--muted);
+  font-weight:bold;
+  border-bottom:2px solid transparent;
+}
+
+.nav button.active{
+  color:var(--teal-dark);
+  border-bottom-color:var(--teal);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.stat{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+}
+
+.stat-icon{
+  font-size:21px;
+}
+
+.stat-number{
+  font-size:27px;
+  font-weight:bold;
+  margin:5px 0;
+}
+
+.stat-label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.green .stat-number{color:var(--green);}
+.orange .stat-number{color:var(--orange);}
+.red .stat-number{color:var(--red);}
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title{
+  margin:0 0 5px;
+  color:var(--teal-dark);
+}
+
+.section-sub{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* =========================
+   ALERT CARDS
+========================= */
+
+.alert-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:18px;
+}
+
+.alert-card{
+  background:white;
+  border:1px solid var(--line);
+  border-right:5px solid var(--red);
+  border-radius:16px;
+  padding:20px;
+}
+
+.alert-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+}
+
+.student-name{
+  font-size:17px;
+  font-weight:bold;
+  color:var(--teal-dark);
+}
+
+.student-class{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.badge{
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.badge.red{
+  color:var(--red);
+  background:var(--red-bg);
+}
+
+.badge.orange{
+  color:var(--orange);
+  background:var(--orange-bg);
+}
+
+.badge.green{
+  color:var(--green);
+  background:var(--green-bg);
+}
+
+.alert-score{
+  margin:18px 0;
+}
+
+.score-number{
+  font-size:30px;
+  font-weight:bold;
+  color:var(--red);
+}
+
+.score-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:12px 0;
+}
+
+.tag{
+  background:var(--bg);
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.insight{
+  background:var(--teal-light);
+  border:1px solid #cde5e1;
+  border-radius:10px;
+  padding:11px;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.view-btn{
+  margin-top:12px;
+  border:0;
+  background:none;
+  color:var(--teal);
+  font-weight:bold;
+}
+
+/* =========================
+   STUDENT TABLE
+========================= */
+
+.table-wrap{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:14px;
+  text-align:right;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+th{
+  background:var(--bg);
+  color:var(--muted);
+  font-size:11px;
+}
+
+tr:last-child td{
+  border-bottom:0;
+}
+
+tr:hover td{
+  background:var(--teal-light);
+}
+
+/* =========================
+   OVERVIEW
+========================= */
+
+.overview{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.panel{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px;
+}
+
+.donut{
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  margin:15px auto;
+  background:
+    conic-gradient(
+      var(--green) 0 68%,
+      var(--orange) 68% 89%,
+      var(--red) 89% 100%
+    );
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.donut-center{
+  width:125px;
+  height:125px;
+  border-radius:50%;
+  background:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.donut-center strong{
+  font-size:28px;
+}
+
+.legend{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.legend-item{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  display:inline-block;
+  border-radius:50%;
+  margin-left:6px;
+}
+
+.progress{
+  height:12px;
+  background:var(--bg);
+  border-radius:10px;
+  overflow:hidden;
+  margin:7px 0 15px;
+}
+
+.progress span{
+  display:block;
+  height:100%;
+  border-radius:10px;
+}
+
+.green-fill{background:var(--green);}
+.orange-fill{background:var(--orange);}
+.red-fill{background:var(--red);}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px;
+}
+
+.profile-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+
+.profile-name{
+  font-size:25px;
+  font-weight:bold;
+  color:var(--teal-dark);
+}
+
+.profile-meta{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.profile-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:25px;
+  margin-top:22px;
+}
+
+.metric{
+  background:var(--bg);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:12px;
+}
+
+.metric-title{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.metric-value{
+  font-size:21px;
+  font-weight:bold;
+  margin-top:4px;
+}
+
+.tip{
+  background:var(--teal-light);
+  border-radius:12px;
+  padding:14px;
+  font-size:13px;
+  line-height:1.8;
+}
+
+/* =========================
+   PARENT
+========================= */
+
+.parent-container{
+  max-width:950px;
+  margin:auto;
+  padding:30px;
+}
+
+.parent-welcome{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.parent-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.parent-stat{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:18px;
+}
+
+.parent-stat strong{
+  display:block;
+  font-size:23px;
+  margin-top:6px;
+}
+
+.info-box{
+  background:var(--teal-light);
+  border-radius:15px;
+  padding:17px;
+  line-height:1.8;
+  margin-top:20px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* =========================
+   SARAH CHAT WIDGET
+========================= */
+
+#chat-toggle{
+  position:fixed;
+  bottom:22px;
+  left:22px;
+  background:var(--teal);
+  color:white;
+  border:0;
+  border-radius:30px;
+  padding:13px 20px;
+  font-size:14px;
+  font-weight:bold;
+  box-shadow:0 8px 25px rgba(20,80,77,.25);
+  z-index:80;
+}
+
+#chat-toggle:hover{
+  background:var(--teal-dark);
+}
+
+#chat-panel{
+  display:none;
+  position:fixed;
+  bottom:80px;
+  left:22px;
+  width:340px;
+  max-width:90vw;
+  height:460px;
+  max-height:70vh;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 15px 45px rgba(20,80,77,.18);
+  z-index:90;
+  overflow:hidden;
+  flex-direction:column;
+}
+
+#chat-panel.open{
+  display:flex;
+}
+
+#chat-header{
+  background:var(--teal);
+  color:white;
+  padding:13px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  font-weight:bold;
+}
+
+#chat-close{
+  background:none;
+  border:0;
+  color:white;
+  font-size:16px;
+}
+
+#chat-messages{
+  flex:1;
+  overflow-y:auto;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:var(--bg);
+}
+
+.chat-bubble{
+  max-width:85%;
+  padding:9px 13px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.chat-bubble.user{
+  align-self:flex-start;
+  background:var(--teal);
+  color:white;
+  border-bottom-left-radius:4px;
+}
+
+.chat-bubble.sara{
+  align-self:flex-end;
+  background:white;
+  border:1px solid var(--line);
+  color:var(--text);
+  border-bottom-right-radius:4px;
+}
+
+.chat-bubble.pending{
+  color:var(--muted);
+  font-style:italic;
+}
+
+#chat-input-row{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  border-top:1px solid var(--line);
+}
+
+#chat-mic{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:10px;
+  width:38px;
+  flex-shrink:0;
+  font-size:15px;
+}
+
+#chat-mic:hover{
+  border-color:var(--teal);
+}
+
+#chat-mic.recording{
+  background:var(--red-bg);
+  border-color:var(--red);
+  animation:mic-pulse 1s infinite;
+}
+
+@keyframes mic-pulse{
+  0%{ box-shadow:0 0 0 0 rgba(201,75,60,.4); }
+  70%{ box-shadow:0 0 0 8px rgba(201,75,60,0); }
+  100%{ box-shadow:0 0 0 0 rgba(201,75,60,0); }
+}
+
+#chat-voice-toggle{
+  background:none;
+  border:0;
+  color:white;
+  font-size:15px;
+  opacity:.85;
+}
+
+#chat-voice-toggle.muted{
+  opacity:.4;
+}
+
+#chat-input{
+  flex:1;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:9px 11px;
+  font-size:13px;
+  outline:none;
+}
+
+#chat-input:focus{
+  border-color:var(--teal);
+}
+
+#chat-send{
+  background:var(--teal);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:9px 16px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+#chat-send:hover{
+  background:var(--teal-dark);
+}
+
+#chat-status{
+  font-size:10px;
+  color:var(--muted);
+  text-align:center;
+  padding:5px;
+  border-top:1px solid var(--line);
+}
+
+@media(max-width:480px){
+  #chat-panel{
+    left:10px;
+    right:10px;
+    width:auto;
+  }
+  #chat-toggle{
+    left:10px;
+    bottom:14px;
+    padding:11px 16px;
+    font-size:13px;
+  }
+}
+
+@media(max-width:700px){
+
+  .role-cards{
+    grid-template-columns:1fr;
+  }
+
+  .home-logo h1{
+    font-size:30px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .overview{
+    grid-template-columns:1fr;
+  }
+
+  .profile-grid{
+    grid-template-columns:1fr;
+  }
+
+  .parent-stats{
+    grid-template-columns:1fr;
+  }
+
+  .container,
+  .parent-container{
+    padding:18px;
+  }
+
+  .app-header{
+    padding:15px;
+  }
+}
+/* -------- REPORT CARD -------- */
+.report-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
+}
+.report-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:10px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:14px;
+  margin-bottom:14px;
+}
+.report-title{ font-size:18px; font-weight:bold; margin:0 0 4px; }
+.report-date{ font-size:12.5px; color:var(--muted); }
+.report-status-badge{
+  font-size:12px; font-weight:bold; padding:4px 12px; border-radius:999px;
+  background:#EEF2FF; color:#3730A3;
+}
+.report-status-badge.مقبول{ background:#E4F3EA; color:#1E7A46; }
+.report-status-badge.مرفوض{ background:#FBE7E3; color:#B33F30; }
+.report-summary{
+  background:var(--bg); border-radius:10px; padding:12px 14px;
+  font-size:14px; margin-bottom:16px;
+}
+.report-section-title{ font-size:14px; font-weight:bold; margin:16px 0 8px; }
+.report-item{
+  display:flex; justify-content:space-between; gap:10px;
+  padding:9px 12px; background:var(--bg); border-radius:8px; margin-bottom:6px; font-size:13px;
+}
+.report-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+.report-actions button{
+  border:1px solid var(--line); background:#fff; border-radius:8px;
+  padding:8px 14px; font-size:13px; cursor:pointer;
+}
+.report-actions button.accept{ color:#1E7A46; border-color:#1E7A46; }
+.report-actions button.reject{ color:#B33F30; border-color:#B33F30; }
+.report-edit-box textarea{
+  width:100%; min-height:80px; margin-top:10px; padding:10px;
+  border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:13px;
+}
+
+/* -------- MANUAL NOTE FORM (in student profile) -------- */
+.manual-note-box{
+  background:var(--bg); border-radius:10px; padding:14px; margin-top:14px;
+}
+.manual-note-box h4{ font-size:13px; margin:0 0 8px; }
+.manual-note-row{ display:flex; gap:8px; flex-wrap:wrap; }
+.manual-note-row select, .manual-note-row input{
+  padding:8px 10px; border:1px solid var(--line); border-radius:8px; font-family:inherit; font-size:13px;
+}
+.manual-note-row input{ flex:1; min-width:160px; }
+.manual-note-row button{
+  background:var(--teal,#1F6F6B); color:#fff; border:0; border-radius:8px;
+  padding:8px 16px; font-size:13px; cursor:pointer;
+}
+
+@media print{
+  #chat-toggle, #chat-panel, nav.nav, .back-btn, .report-actions, header{ display:none !important; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ==================================================
+     HOME
+================================================== -->
+
+<section id="home" class="page active">
+
+<div class="home-container">
+
+  <div class="home-logo logo">
+
+    <div class="logo-icon">✦</div>
+
+    <h1>البصيرة الرقمية</h1>
+
+    <p>نلاحظ ما قد لا يُلاحظ.</p>
+
+  </div>
+
+  <div class="mission">
+
+    <div class="mission-title">
+      لأن الاكتشاف المبكر يصنع فرقًا.
+    </div>
+
+    <p>
+      نظام ذكي يساعد على اكتشاف التغيرات السلوكية والأكاديمية
+      لدى الطلبة مبكرًا، قبل أن تتطور إلى حالات حرجة،
+      ويدعم الأخصائيين وأولياء الأمور في اتخاذ قرارات أفضل.
+    </p>
+
+    <div class="early">
+      🔎 نكتشف الإشارة قبل أن تتحول إلى مشكلة.
+    </div>
+
+  </div>
+
+  <div class="choose-title">
+    من أنت؟
+  </div>
+
+  <div class="role-cards">
+
+    <button class="role-card" onclick="showPage('specialist-login')">
+
+      <div class="role-icon">🧑‍💼</div>
+
+      <h3>الأخصائيون</h3>
+
+      <p>
+        الوصول إلى لوحة متابعة وتحليل حالات الطلبة
+        ومراجعة التنبيهات التي تحتاج إلى تدخل.
+      </p>
+
+    </button>
+
+    <button class="role-card" onclick="showPage('parent-login')">
+
+      <div class="role-icon">👨‍👩‍👧</div>
+
+      <h3>ولي الأمر</h3>
+
+      <p>
+        متابعة مستوى طفلك والاطلاع على مؤشرات
+        تقدمه بطريقة بسيطة وآمنة.
+      </p>
+
+    </button>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     SPECIALIST LOGIN
+================================================== -->
+
+<section id="specialist-login" class="page login-page">
+
+<div class="login-box">
+
+<button class="back" onclick="showPage('home')">
+← العودة
+</button>
+
+<div class="logo">
+
+  <div class="logo-icon">🧑‍💼</div>
+
+  <h1 style="font-size:22px">
+    دخول الأخصائي
+  </h1>
+
+  <p>
+    الوصول المصرح إلى بيانات الطلبة
+  </p>
+
+</div>
+
+<br>
+
+<div class="field">
+
+<label>الاسم الكامل</label>
+
+<input
+id="specialist-name"
+type="text"
+placeholder="مثال: سارة أحمد"
+>
+
+</div>
+
+<div class="field">
+
+<label>الدور</label>
+
+<select>
+
+<option>أخصائية اجتماعية</option>
+<option>أخصائية نفسية</option>
+<option>إدارة المدرسة</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>البريد الإلكتروني</label>
+
+<input
+type="email"
+placeholder="name@school.om"
+>
+
+</div>
+
+<div class="field">
+
+<label>كلمة المرور</label>
+
+<input
+type="password"
+placeholder="••••••••"
+>
+
+</div>
+
+<button
+class="primary"
+onclick="specialistLogin()">
+
+تسجيل الدخول
+
+</button>
+
+<div class="demo">
+
+<b>نموذج تجريبي:</b>
+هذه الواجهة تحاكي نظام الدخول.
+في النظام الفعلي يتم التحقق من الحساب
+من خلال Backend وقاعدة بيانات آمنة.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     PARENT LOGIN
+================================================== -->
+
+<section id="parent-login" class="page login-page">
+
+<div class="login-box">
+
+<button class="back" onclick="showPage('home')">
+← العودة
+</button>
+
+<div class="logo">
+
+  <div class="logo-icon">👨‍👩‍👧</div>
+
+  <h1 style="font-size:22px">
+    بوابة ولي الأمر
+  </h1>
+
+  <p>
+    متابعة طفلك تبدأ بالمعرفة.
+  </p>
+
+</div>
+
+<br>
+
+<div class="field">
+
+<label>الرقم المدني للطالب</label>
+
+<input
+id="civil-id"
+type="text"
+placeholder="أدخل الرقم المدني"
+>
+
+</div>
+
+<div class="field">
+
+<label>كلمة المرور</label>
+
+<input
+id="parent-password"
+type="password"
+placeholder="••••••••"
+>
+
+</div>
+
+<button
+class="primary"
+onclick="parentLogin()">
+
+دخول إلى بيانات الطالب
+
+</button>
+
+<div class="demo">
+
+🔐 يحافظ النظام على خصوصية الطلبة.
+ولي الأمر يستطيع الوصول إلى بيانات
+الطالب المرتبط بحسابه فقط.
+
+<br><br>
+
+<strong>للتجربة:</strong>
+يمكن استخدام أي رقم مدني وكلمة مرور.
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     SPECIALIST DASHBOARD
+================================================== -->
+
+<section id="specialist-dashboard" class="page">
+
+<header class="app-header">
+
+<div class="app-brand">
+
+<div class="app-brand-icon">
+✦
+</div>
+
+<div>
+<strong>البصيرة الرقمية</strong>
+<span>نلاحظ ما قد لا يُلاحظ.</span>
+</div>
+
+</div>
+
+<div>
+
+<span class="user-pill">
+🧑‍💼 الأخصائية
+</span>
+
+<button
+class="logout"
+onclick="showPage('home')">
+
+خروج
+
+</button>
+
+</div>
+
+</header>
+
+<main class="container">
+
+<nav class="nav">
+
+<button
+class="active"
+onclick="specialistTab('alerts',this)">
+🔔 التنبيهات
+</button>
+
+<button
+onclick="specialistTab('students',this)">
+👥 الطلاب
+</button>
+
+<button
+onclick="specialistTab('overview',this)">
+📊 نظرة عامة
+</button>
+
+<button
+onclick="specialistTab('reports',this)">
+📋 التقارير
+</button>
+
+</nav>
+
+
+<!-- ALERTS -->
+
+<div id="alerts-tab">
+
+<h2 class="section-title">
+التنبيهات
+</h2>
+
+<p class="section-sub">
+تعرض هذه الصفحة الحالات التي تجاوزت مستوى التدخل أو تحتاج متابعة (من كل الصفوف).
+</p>
+
+<div class="alert-grid" id="alerts-grid"></div>
+
+</div>
+
+
+<!-- STUDENTS -->
+
+<div id="students-tab" style="display:none">
+
+<h2 class="section-title">
+قائمة الطلاب
+</h2>
+
+<p class="section-sub">
+عرض الطلاب مقسّمين حسب الصف الدراسي. اضغطي "إضافة طالب" داخل أي صف لتسجيل طالب جديد فيه يدوياً.
+</p>
+
+<div id="students-by-class"></div>
+
+</div>
+
+
+<!-- OVERVIEW -->
+
+<div id="overview-tab" style="display:none">
+
+<h2 class="section-title">
+نظرة عامة
+</h2>
+
+<p class="section-sub">
+ملخص واضح يساعد الأخصائية على معرفة وضع الطلبة بسرعة.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-icon">
+👥
+</div>
+
+<div class="stat-number" id="ov-total">
+—
+</div>
+
+<div class="stat-label">
+إجمالي الطلاب
+</div>
+
+</div>
+
+<div class="stat green">
+
+<div class="stat-icon">
+🟢
+</div>
+
+<div class="stat-number" id="ov-green">
+—
+</div>
+
+<div class="stat-label">
+الوضع الطبيعي
+</div>
+
+</div>
+
+<div class="stat orange">
+
+<div class="stat-icon">
+🟠
+</div>
+
+<div class="stat-number" id="ov-orange">
+—
+</div>
+
+<div class="stat-label">
+يحتاج متابعة
+</div>
+
+</div>
+
+<div class="stat red">
+
+<div class="stat-icon">
+🔴
+</div>
+
+<div class="stat-number" id="ov-red">
+—
+</div>
+
+<div class="stat-label">
+يحتاج تدخل
+</div>
+
+</div>
+
+</div>
+
+
+<div class="overview">
+
+<div class="panel">
+
+<h3>
+توزيع حالات الطلاب
+</h3>
+
+<div class="donut" id="ov-donut">
+
+<div class="donut-center">
+
+<strong id="ov-donut-total">—</strong>
+<span>طالب</span>
+
+</div>
+
+</div>
+
+<div class="legend">
+
+<div class="legend-item">
+<span>
+<span class="dot" style="background:var(--green)"></span>
+طبيعي
+</span>
+<b id="ov-green-pct">—</b>
+</div>
+
+<div class="legend-item">
+<span>
+<span class="dot" style="background:var(--orange)"></span>
+متابعة
+</span>
+<b id="ov-orange-pct">—</b>
+</div>
+
+<div class="legend-item">
+<span>
+<span class="dot" style="background:var(--red)"></span>
+تدخل
+</span>
+<b id="ov-red-pct">—</b>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h3>
+مستويات المتابعة
+</h3>
+
+<br>
+
+<div>
+🟢 طبيعي
+<div class="progress">
+<span class="green-fill" id="ov-green-fill" style="width:0%"></span>
+</div>
+</div>
+
+<div>
+🟠 يحتاج متابعة
+<div class="progress">
+<span class="orange-fill" id="ov-orange-fill" style="width:0%"></span>
+</div>
+</div>
+
+<div>
+🔴 يحتاج تدخل
+<div class="progress">
+<span class="red-fill" id="ov-red-fill" style="width:0%"></span>
+</div>
+</div>
+
+<div class="tip">
+
+<b>✦ ماذا يعني هذا؟</b>
+
+<br>
+
+<span id="ov-tip-text">يتم تحديث هذا الملخص تلقائياً بناءً على تحليل الوكيل الذكي لبيانات الطلبة.</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REPORTS -->
+
+<div id="reports-tab" style="display:none">
+
+<h2 class="section-title">
+التقارير
+</h2>
+
+<p class="section-sub">
+تقرير الوكيل الحالي، مبني على أحدث بيانات الطلبة. يقدر الأخصائي يقبله أو يرفضه أو يعدّل عليه أو يطبعه.
+</p>
+
+<div class="report-card" id="report-card"></div>
+
+</div>
+
+</main>
+
+<!-- SARAH CHAT WIDGET -->
+
+<button id="chat-toggle" onclick="toggleChat()">
+✦ تحدثي مع سارة
+</button>
+
+<div id="chat-panel">
+
+<div id="chat-header">
+<span>✦ سارة — المساعدة الذكية</span>
+<div style="display:flex;align-items:center;gap:10px">
+<button id="chat-voice-toggle" onclick="toggleVoiceReplies()" title="تشغيل/إيقاف صوت سارة">🔊</button>
+<button id="chat-close" onclick="toggleChat()">✕</button>
+</div>
+</div>
+
+<div id="chat-messages"></div>
+
+<div id="chat-input-row">
+<button id="chat-mic" onclick="toggleMic()" title="تحدثي بدل الكتابة">🎙️</button>
+<input id="chat-input" type="text" placeholder="اسألي سارة عن أي طالب أو حالة...">
+<button id="chat-send" onclick="sendChatMessage()">إرسال</button>
+</div>
+
+<div id="chat-status">
+متصلة بسيرفر محلي (chat_server.py) — تأكدي أنه شغّال.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     STUDENT PROFILE
+================================================== -->
+
+<section id="student-profile" class="page">
+
+<header class="app-header">
+
+<div class="app-brand">
+
+<div class="app-brand-icon">
+✦
+</div>
+
+<div>
+<strong>البصيرة الرقمية</strong>
+<span>ملف الطالب</span>
+</div>
+
+</div>
+
+<button
+class="logout"
+onclick="showPage('specialist-dashboard')">
+
+← العودة
+
+</button>
+
+</header>
+
+<main class="container">
+
+<div class="profile">
+
+<div class="profile-head">
+
+<div>
+
+<div
+id="profile-name"
+class="profile-name">
+</div>
+
+<div
+id="profile-meta"
+class="profile-meta">
+</div>
+
+</div>
+
+<span
+id="profile-badge"
+class="badge red">
+</span>
+
+</div>
+
+<div class="profile-grid">
+
+<div>
+
+<h3>
+المؤشرات الحالية
+</h3>
+
+<div class="metric">
+
+<div class="metric-title">
+الأداء الدراسي
+</div>
+
+<div class="metric-value">
+📉 تراجع ملحوظ
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-title">
+المشاركة
+</div>
+
+<div class="metric-value">
+💬 منخفضة
+</div>
+
+</div>
+
+<div class="metric">
+
+<div class="metric-title">
+الحضور
+</div>
+
+<div class="metric-value">
+📅 يحتاج متابعة
+</div>
+
+</div>
+
+</div>
+
+<div>
+
+<h3>
+✦ البصيرة الذكية
+</h3>
+
+<div class="tip">
+
+<div id="profile-insight">
+</div>
+
+<br>
+
+<b>التوصية:</b>
+
+مراجعة الحالة مع الطالب،
+ومتابعة المؤشرات خلال الفترة القادمة
+قبل اتخاذ أي إجراء.
+
+</div>
+
+<div class="manual-note-box">
+<h4>✍️ إضافة ملاحظة يدوية (حالة لم ترصدها الكاميرا)</h4>
+<div class="manual-note-row">
+<select id="manual-note-category">
+<option value="سلوكي">سلوكي</option>
+<option value="نفسي">نفسي</option>
+<option value="صحي">صحي</option>
+<option value="ملاحظة عامة">ملاحظة عامة</option>
+</select>
+<input id="manual-note-text" type="text" placeholder="اكتبي الملاحظة هنا...">
+<button onclick="submitManualNote()">إضافة</button>
+</div>
+<div id="manual-note-status" style="font-size:12px;margin-top:6px;color:var(--muted)"></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</section>
+
+
+<!-- ==================================================
+     ADD STUDENT (specialist only)
+================================================== -->
+
+<section id="add-student" class="page">
+
+<header class="app-header">
+
+<div class="app-brand">
+
+<div class="app-brand-icon">
+✦
+</div>
+
+<div>
+<strong>البصيرة الرقمية</strong>
+<span>تسجيل طالب جديد</span>
+</div>
+
+</div>
+
+<button
+class="logout"
+onclick="showPage('specialist-dashboard'); specialistTabByName('students')">
+
+← العودة لقائمة الطلاب
+
+</button>
+
+</header>
+
+<main class="container" style="max-width:560px">
+
+<div class="login-box" style="max-width:100%">
+
+<div class="logo">
+  <div class="logo-icon">➕</div>
+  <h1 style="font-size:22px">تسجيل بيانات طالب</h1>
+  <p>هذه الصفحة متاحة للأخصائي فقط لإضافة حالة يدوياً.</p>
+</div>
+
+<br>
+
+<div class="field">
+<label>الاسم الكامل</label>
+<input id="new-student-name" type="text" placeholder="مثال: خالد سليمان">
+</div>
+
+<div class="field">
+<label>الصف الدراسي</label>
+<select id="new-student-class">
+<option>الصف الأول</option>
+<option>الصف الثاني</option>
+<option>الصف الثالث</option>
+<option>الصف الرابع</option>
+<option>الصف الخامس</option>
+<option>الصف السادس</option>
+</select>
+</div>
+
+<div class="field">
+<label>الحالة الأولية (تقدير الأخصائي)</label>
+<select id="new-student-status">
+<option value="green">🟢 طبيعي</option>
+<option value="orange">🟠 يحتاج متابعة</option>
+<option value="red">🔴 يحتاج تدخل</option>
+</select>
+</div>
+
+<div class="field">
+<label>ملاحظة أولية (اختياري)</label>
+<input id="new-student-note" type="text" placeholder="مثال: انعزال ملحوظ عن الزملاء">
+</div>
+
+<button class="primary" onclick="saveNewStudent()">
+حفظ الطالب
+</button>
+
+<div class="demo">
+<b>ملاحظة:</b> هذه الإضافة يدوية من الأخصائي فقط، ولا تظهر لولي الأمر
+إلا إذا رُبطت لاحقاً بحساب الطالب الفعلي عبر النظام الخلفي.
+</div>
+
+</div>
+
+</main>
+
+</section>
+
+
+<!-- ==================================================
+     PARENT DASHBOARD
+================================================== -->
+
+<section id="parent-dashboard" class="page">
+
+<header class="app-header">
+
+<div class="app-brand">
+
+<div class="app-brand-icon">
+✦
+</div>
+
+<div>
+<strong>البصيرة الرقمية</strong>
+<span>بوابة ولي الأمر</span>
+</div>
+
+</div>
+
+<div>
+
+<span class="user-pill">
+👨‍👩‍👧 ولي الأمر
+</span>
+
+<button
+class="logout"
+onclick="showPage('home')">
+
+خروج
+
+</button>
+
+</div>
+
+</header>
+
+
+<main class="parent-container">
+
+<div class="parent-welcome">
+
+<h2>
+أهلاً بك 👋
+</h2>
+
+<p style="color:var(--muted)">
+هذه الصفحة تعرض بيانات طفلك فقط.
+</p>
+
+<h2 style="color:var(--teal-dark)">
+فاطمة محمد
+</h2>
+
+<span style="color:var(--muted)">
+الصف الرابع
+</span>
+
+</div>
+
+
+<div class="parent-stats">
+
+<div class="parent-stat">
+
+<span>
+📚 الأداء الدراسي
+</span>
+
+<strong style="color:var(--green)">
+مستقر
+</strong>
+
+</div>
+
+<div class="parent-stat">
+
+<span>
+📅 الحضور
+</span>
+
+<strong style="color:var(--green)">
+جيد
+</strong>
+
+</div>
+
+<div class="parent-stat">
+
+<span>
+📈 التقدم
+</span>
+
+<strong style="color:var(--green)">
+↑ تحسن
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="panel" style="margin-top:20px">
+
+<h3>
+✦ البصيرة الذكية
+</h3>
+
+<div class="info-box">
+
+تشير المؤشرات الحالية إلى استقرار
+مستوى الطالب الدراسي والسلوكي.
+
+ننصح بالاستمرار في دعم الالتزام
+والحضور والمشاركة الإيجابية.
+
+</div>
+
+</div>
+
+
+<div class="panel" style="margin-top:20px">
+
+<h3>
+خصوصية بيانات الطالب 🔐
+</h3>
+
+<p style="font-size:13px;color:var(--muted);line-height:1.8">
+
+تم تصميم بوابة ولي الأمر بحيث يتم عرض
+بيانات الطالب المرتبط بحساب ولي الأمر فقط،
+ولا يمكن الاطلاع على بيانات الطلاب الآخرين.
+
+</p>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   PAGE NAVIGATION
+========================================= */
+
+function showPage(id){
+
+  document.querySelectorAll(".page").forEach(function(page){
+    page.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  window.scrollTo(0,0);
+}
+
+
+/* =========================================
+   SPECIALIST LOGIN
+========================================= */
+
+function specialistLogin(){
+
+  var name =
+    document.getElementById("specialist-name").value.trim();
+
+  if(!name){
+    alert("الرجاء إدخال الاسم.");
+    return;
+  }
+
+  showPage("specialist-dashboard");
+}
+
+
+/* =========================================
+   PARENT LOGIN
+========================================= */
+
+function parentLogin(){
+
+  var civil =
+    document.getElementById("civil-id").value.trim();
+
+  var password =
+    document.getElementById("parent-password").value.trim();
+
+  if(!civil || !password){
+
+    alert("الرجاء إدخال الرقم المدني وكلمة المرور.");
+
+    return;
+  }
+
+  showPage("parent-dashboard");
+}
+
+
+/* =========================================
+   SPECIALIST TABS
+========================================= */
+
+function specialistTab(tab,button){
+
+  document.getElementById("alerts-tab").style.display="none";
+  document.getElementById("students-tab").style.display="none";
+  document.getElementById("overview-tab").style.display="none";
+  document.getElementById("reports-tab").style.display="none";
+
+  document.getElementById(tab+"-tab").style.display="block";
+
+  document.querySelectorAll(".nav button").forEach(function(btn){
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+}
+
+
+/* =========================================
+   STUDENT DATA (unified array)
+========================================= */
+
+/* =========================================
+   STUDENT DATA (unified array)
+   -- تُحقن هذه البيانات من بايثون (app_agent.py)
+   -- بعد تحليل الوكيل الذكي الحقيقي (Agent + LLM)
+========================================= */
+
+var PAYLOAD = {"students": [{"id": "E104", "name": "فيصل السعدي", "className": "الصف الثالث", "score": "47%", "statusKey": "red", "statusLabel": "🔴 يحتاج تدخل", "performanceLabel": "📉 متراجع", "tags": ["انعزال مبالغ فيه عن الزملاء", "بكاء متكرر بدون سبب واضح"], "insight": "يبدو أن فيصل يمر بوقت صعب ويشعر بالحزن والانعزال، مما يؤثر على تركيزه ونشاطه في الفصل بشكل ملحوظ."}, {"id": "E112", "name": "ليان الشحية", "className": "الصف الثاني", "score": "62%", "statusKey": "red", "statusLabel": "🔴 يحتاج تدخل", "performanceLabel": "📉 متراجع", "tags": ["تشتت وانعدام تركيز حاد", "حركة توتر غير معتادة", "شكوى متكررة من آلام جسدية", "فقدان شهية ملحوظ"], "insight": "تظهر على ليان علامات توتر وتعب جسدي واضحة بالتزامن مع تراجع درجاتها المدرسية، مما يستدعي دعمها برفق واحتواء مشاعرها."}, {"id": "E116", "name": "ليان الغافري", "className": "الصف الخامس", "score": "65%", "statusKey": "red", "statusLabel": "🔴 يحتاج تدخل", "performanceLabel": "📉 متراجع", "tags": ["تشتت وانعدام تركيز حاد", "حركة توتر غير معتادة", "حزن ملحوظ ومستمر"], "insight": "تُظهر الطالبة ليان تراجعاً أكاديمياً ملحوظاً يتزامن مع ملاحظات متكررة حول الحزن وتشتت التركيز في الفصل."}, {"id": "E124", "name": "فاطمة العامري", "className": "الصف الخامس", "score": "58%", "statusKey": "red", "statusLabel": "🔴 يحتاج تدخل", "performanceLabel": "📉 متراجع", "tags": ["تشتت وانعدام تركيز حاد", "حركة توتر غير معتادة", "صعوبة الالتزام بالتعليمات"], "insight": "تظهر على الطالبة فاطمة العامري علامات تشتت واضح وتراجع مستمر في التحصيل الدراسي عبر الأسابيع، مما يستدعي متابعة ودعم تربوي عاجل."}, {"id": "E130", "name": "دانة سليمان", "className": "الصف السادس", "score": "67%", "statusKey": "red", "statusLabel": "🔴 يحتاج تدخل", "performanceLabel": "📉 متراجع", "tags": ["شكوى متكررة من آلام جسدية", "علامات إعياء وتعب ظاهري"], "insight": "تُظهر دانة تراجعاً ملحوظاً في التحصيل الدراسي بالتزامن مع تكرار الشكاوى الصحية والإعياء الجسدي، مما يستدعي التواصل مع الأسرة والاطمئنان على حالتها العامة."}, {"id": "E101", "name": "ناصر الرواحي", "className": "الصف الأول", "score": "68%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["علامات إعياء وتعب ظاهري"], "insight": "ناصر يبدو متعباً أحياناً في الفصل، ومستوى تركيزه يقل تدريجياً مع ظهور علامات إعياء بدني نحتاج لمتابعتها بحنان واهتمام."}, {"id": "E105", "name": "بيان الحارثي", "className": "الصف الثالث", "score": "85%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["شكوى متكررة من آلام جسدية", "فقدان شهية ملحوظ"], "insight": "تظهر على الطالب بيان الحارثي شكاوى صحية متكررة وتراجع طفيف في الدرجات، مما قد يشير إلى مرورها بضغوط جسدية أو شعور بالتعب أثر على نشاطها المدرسي."}, {"id": "E114", "name": "ماجد السعدي", "className": "الصف السادس", "score": "79%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["انعزال مبالغ فيه عن الزملاء"], "insight": "يظهر على ماجد ميل للانعزال تزامن مع تراجع طفيف في درجاته الدراسية؛ جلسة ودية معه قد تفيد في فهم ما يشغله."}, {"id": "E117", "name": "نور محمد", "className": "الصف الرابع", "score": "83%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "نور تلميذة مجتهدة في الصف الرابع، ظهر لديها تراجع طفيف في مستواها الدراسي دون وجود أي مشكلات سلوكية مسجلة، وقد تحتاج إلى تشجيع لطيف أو مراجعة بسيطة لاستعادة نشاطها المعتاد."}, {"id": "E119", "name": "سارة السعدي", "className": "الصف الخامس", "score": "61%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["تشتت وانعدام تركيز حاد"], "insight": "تعاني سارة من تشتت متكرر في الحصص تسبب في نزول درجاتها ببطء، وتحتاج منا دعمها لتستعيد تركيزها ونشاطها المعتاد."}, {"id": "E127", "name": "جود سليمان", "className": "الصف السادس", "score": "85%", "statusKey": "orange", "statusLabel": "🟠 يحتاج متابعة", "performanceLabel": "📉 متراجع", "tags": ["حزن ملحوظ ومستمر"], "insight": "يبدو أن جود يمر بوقت يحتاج فيه لبعض الدعم العاطفي، حيث تظهر عليه مشاعر حزن تؤثر قليلاً على نشاطه واهتمامه المدرسي."}, {"id": "E102", "name": "طارق أحمد", "className": "الصف الرابع", "score": "80%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "↑ تحسن", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "يُظهر طارق أحمد تحسناً ملحوظاً في مستواه الأكاديمي مع استقرار تام وخلو السجل من أي ملاحظات سلوكية سلبية."}, {"id": "E103", "name": "سارة السعدي", "className": "الصف الثاني", "score": "84%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "تُظهر الطالبة سارة السعدي مستوى مستقراً في درجاتها وخلو سجلها من أي ملاحظات سلوكية، مما يعكس بيئة إيجابية وثابتة."}, {"id": "E106", "name": "راشد السعدي", "className": "الصف الرابع", "score": "85%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "راشد طالب مجتهد ومستقر دراسياً، ودرجاته ممتازة وثابتة ولا توجد أي ملاحظات سلوكية تستدعي القلق."}, {"id": "E107", "name": "بدر المعمري", "className": "الصف الرابع", "score": "93%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "الطالب بدر في الصف الرابع يُظهر أداءً أكاديمياً مستقراً وممتازاً، ولا توجد أي ملاحظات سلوكية سلبية تعيق تقدمه."}, {"id": "E108", "name": "سارة الرواحي", "className": "الصف الأول", "score": "80%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "سارة طفلة نشيطة ومستواها الأكاديمي مستقر وجيد عبر الأسابيع بدون وجود أي ملاحظات سلوكية تذكر."}, {"id": "E109", "name": "روان الحارثي", "className": "الصف الخامس", "score": "91%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "مستوى الطالبة روان ممتاز ودرجاتها مستقرة طوال الأسابيع الماضية، ولا توجد أي ملاحظات سلوكية تستدعي القلق."}, {"id": "E110", "name": "شهد الكيومي", "className": "الصف السادس", "score": "87%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "↑ تحسن", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "الطالبة شهد مستواها الأكاديمي في تحسّن مستمر، ولا توجد أي ملاحظات سلوكية سلبية تعيق تقدمها."}, {"id": "E111", "name": "طارق الكيومي", "className": "الصف الثاني", "score": "93%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "يُظهر الطالب طارق الكيومي أداءً أكاديمياً مستقراً وممتازاً عبر الأسابيع، ولا توجد أي ملاحظات سلوكية مسجلة تثير القلق."}, {"id": "E113", "name": "مريم الغافري", "className": "الصف الرابع", "score": "77%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["صعوبة الالتزام بالتعليمات"], "insight": "مريم طفلة مجتهدة ومستقرة في درجاتها، ولديها ملاحظة بسيطة حول اتباع التعليمات. مع قليل من التشجيع ستكون أفضل!"}, {"id": "E115", "name": "سارة سليمان", "className": "الصف الأول", "score": "81%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "↑ تحسن", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "سارة طالبة متفوقة وتظهر تحسناً ملحوظاً في مستواها الدراسي أسبوعاً بعد أسبوع دون أي ملاحظات سلوكية سلبية."}, {"id": "E118", "name": "سلطان الحارثي", "className": "الصف الثاني", "score": "86%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "مستوى الطالب سلطان مستقر ودرجاته متقاربة طوال الأسابيع الماضية، ولا توجد أي ملاحظات سلوكية تستدعي القلق."}, {"id": "E120", "name": "سلطان سليمان", "className": "الصف الثالث", "score": "83%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "سلطان طالب في الصف الثالث، درجاته مستقرة ولا توجد لديه ملاحظات سلوكية سلبية خلال الأسابيع الماضية."}, {"id": "E121", "name": "خالد محمد", "className": "الصف الخامس", "score": "92%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "↑ تحسن", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "خالد طالب مجتهد ومستواه الأكاديمي في تصاعد مستمر، ولا توجد أي ملاحظات سلوكية تستدعي القلق."}, {"id": "E122", "name": "مريم المعمري", "className": "الصف الأول", "score": "82%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["حركة توتر غير معتادة"], "insight": "مريم تظهر أحياناً شعوراً بالتوتر البسيط، لكن درجاتها مستقرة وتؤدي واجباتها بشكل جيد."}, {"id": "E123", "name": "راشد الكندي", "className": "الصف الرابع", "score": "82%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "مستوى راشد الأكاديمي مستقر ولا توجد أي ملاحظات سلوكية تستدعي القلق حالياً."}, {"id": "E125", "name": "حمد الكيومي", "className": "الصف السادس", "score": "93%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "أداء الطالب حمد في الصف السادس ممتاز ومستقر طوال الأسابيع الماضية دون أي ملاحظات سلوكية سلبية."}, {"id": "E126", "name": "ليان الكندي", "className": "الصف الأول", "score": "79%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "ليان طفلة رائعة ومستواها الأكاديمي مستقر ومطمئن، ولا توجد أي ملاحظات سلوكية تستدعي القلق حالياً."}, {"id": "E128", "name": "بيان البلوشي", "className": "الصف السادس", "score": "86%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "الطالبة بيان مستقرة أكاديمياً وليس لديها أي ملاحظات سلوكية مسجلة طوال الأسابيع الماضية، أداؤها ممتاز وطبيعي جداً."}, {"id": "E129", "name": "دانة المعمري", "className": "الصف الخامس", "score": "82%", "statusKey": "green", "statusLabel": "🟢 طبيعي", "performanceLabel": "→ مستقر", "tags": ["✅ لا توجد مؤشرات سلوكية"], "insight": "دانة طالبة مجتهدة ومستوى درجاتها مستقر وجيد جداً، ولا توجد لديها أي ملاحظات سلوكية سلبية."}], "report": {"date": "2026-08-26", "title": "تقرير الوكيل الأسبوعي", "summary": "5 حالة تحتاج تدخلاً فورياً، و6 تحتاج متابعة.", "high": [{"name": "فيصل السعدي", "class_name": "الصف الثالث", "insight": "يبدو أن فيصل يمر بوقت صعب ويشعر بالحزن والانعزال، مما يؤثر على تركيزه ونشاطه في الفصل بشكل ملحوظ.", "weekly": [{"week": 1, "score": 80.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 75.0, "flagged": true, "category": "نفسي", "note": "بكاء متكرر بدون سبب واضح"}, {"week": 3, "score": 68.0, "flagged": true, "category": "نفسي", "note": "انعزال مبالغ فيه عن الزملاء"}, {"week": 4, "score": 60.0, "flagged": true, "category": "نفسي", "note": "بكاء متكرر بدون سبب واضح"}, {"week": 5, "score": 50.0, "flagged": true, "category": "نفسي", "note": "بكاء متكرر بدون سبب واضح"}, {"week": 6, "score": 47.0, "flagged": true, "category": "نفسي", "note": "انعزال مبالغ فيه عن الزملاء"}]}, {"name": "ليان الشحية", "class_name": "الصف الثاني", "insight": "تظهر على ليان علامات توتر وتعب جسدي واضحة بالتزامن مع تراجع درجاتها المدرسية، مما يستدعي دعمها برفق واحتواء مشاعرها.", "weekly": [{"week": 1, "score": 93.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 90.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 82.0, "flagged": true, "category": "سلوكي", "note": "حركة توتر غير معتادة"}, {"week": 4, "score": 81.0, "flagged": true, "category": "صحي", "note": "شكوى متكررة من آلام جسدية"}, {"week": 5, "score": 69.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 6, "score": 62.0, "flagged": true, "category": "صحي", "note": "فقدان شهية ملحوظ"}]}, {"name": "ليان الغافري", "class_name": "الصف الخامس", "insight": "تُظهر الطالبة ليان تراجعاً أكاديمياً ملحوظاً يتزامن مع ملاحظات متكررة حول الحزن وتشتت التركيز في الفصل.", "weekly": [{"week": 1, "score": 94.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 92.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 83.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 4, "score": 81.0, "flagged": true, "category": "نفسي", "note": "حزن ملحوظ ومستمر"}, {"week": 5, "score": 71.0, "flagged": true, "category": "سلوكي", "note": "حركة توتر غير معتادة"}, {"week": 6, "score": 65.0, "flagged": true, "category": "نفسي", "note": "حزن ملحوظ ومستمر"}]}, {"name": "فاطمة العامري", "class_name": "الصف الخامس", "insight": "تظهر على الطالبة فاطمة العامري علامات تشتت واضح وتراجع مستمر في التحصيل الدراسي عبر الأسابيع، مما يستدعي متابعة ودعم تربوي عاجل.", "weekly": [{"week": 1, "score": 95.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 85.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 3, "score": 78.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 4, "score": 70.0, "flagged": true, "category": "سلوكي", "note": "حركة توتر غير معتادة"}, {"week": 5, "score": 64.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 6, "score": 58.0, "flagged": true, "category": "سلوكي", "note": "صعوبة الالتزام بالتعليمات"}]}, {"name": "دانة سليمان", "class_name": "الصف السادس", "insight": "تُظهر دانة تراجعاً ملحوظاً في التحصيل الدراسي بالتزامن مع تكرار الشكاوى الصحية والإعياء الجسدي، مما يستدعي التواصل مع الأسرة والاطمئنان على حالتها العامة.", "weekly": [{"week": 1, "score": 82.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 81.0, "flagged": true, "category": "صحي", "note": "شكوى متكررة من آلام جسدية"}, {"week": 3, "score": 78.0, "flagged": true, "category": "صحي", "note": "علامات إعياء وتعب ظاهري"}, {"week": 4, "score": 72.0, "flagged": true, "category": "صحي", "note": "علامات إعياء وتعب ظاهري"}, {"week": 5, "score": 71.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 67.0, "flagged": true, "category": "صحي", "note": "شكوى متكررة من آلام جسدية"}]}], "medium": [{"name": "ناصر الرواحي", "class_name": "الصف الأول", "insight": "ناصر يبدو متعباً أحياناً في الفصل، ومستوى تركيزه يقل تدريجياً مع ظهور علامات إعياء بدني نحتاج لمتابعتها بحنان واهتمام.", "weekly": [{"week": 1, "score": 80.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 80.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 76.0, "flagged": false, "category": "", "note": ""}, {"week": 4, "score": 74.0, "flagged": false, "category": "", "note": ""}, {"week": 5, "score": 72.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 68.0, "flagged": true, "category": "صحي", "note": "علامات إعياء وتعب ظاهري"}]}, {"name": "بيان الحارثي", "class_name": "الصف الثالث", "insight": "تظهر على الطالب بيان الحارثي شكاوى صحية متكررة وتراجع طفيف في الدرجات، مما قد يشير إلى مرورها بضغوط جسدية أو شعور بالتعب أثر على نشاطها المدرسي.", "weekly": [{"week": 1, "score": 94.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 95.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 93.0, "flagged": false, "category": "", "note": ""}, {"week": 4, "score": 91.0, "flagged": true, "category": "صحي", "note": "شكوى متكررة من آلام جسدية"}, {"week": 5, "score": 90.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 85.0, "flagged": true, "category": "صحي", "note": "فقدان شهية ملحوظ"}]}, {"name": "ماجد السعدي", "class_name": "الصف السادس", "insight": "يظهر على ماجد ميل للانعزال تزامن مع تراجع طفيف في درجاته الدراسية؛ جلسة ودية معه قد تفيد في فهم ما يشغله.", "weekly": [{"week": 1, "score": 87.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 84.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 85.0, "flagged": false, "category": "", "note": ""}, {"week": 4, "score": 82.0, "flagged": false, "category": "", "note": ""}, {"week": 5, "score": 78.0, "flagged": true, "category": "نفسي", "note": "انعزال مبالغ فيه عن الزملاء"}, {"week": 6, "score": 79.0, "flagged": false, "category": "", "note": ""}]}, {"name": "نور محمد", "class_name": "الصف الرابع", "insight": "نور تلميذة مجتهدة في الصف الرابع، ظهر لديها تراجع طفيف في مستواها الدراسي دون وجود أي مشكلات سلوكية مسجلة، وقد تحتاج إلى تشجيع لطيف أو مراجعة بسيطة لاستعادة نشاطها المعتاد.", "weekly": [{"week": 1, "score": 88.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 88.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 82.0, "flagged": false, "category": "", "note": ""}, {"week": 4, "score": 83.0, "flagged": false, "category": "", "note": ""}, {"week": 5, "score": 83.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 83.0, "flagged": false, "category": "", "note": ""}]}, {"name": "سارة السعدي", "class_name": "الصف الخامس", "insight": "تعاني سارة من تشتت متكرر في الحصص تسبب في نزول درجاتها ببطء، وتحتاج منا دعمها لتستعيد تركيزها ونشاطها المعتاد.", "weekly": [{"week": 1, "score": 74.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 73.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 3, "score": 70.0, "flagged": true, "category": "سلوكي", "note": "تشتت وانعدام تركيز حاد"}, {"week": 4, "score": 67.0, "flagged": false, "category": "", "note": ""}, {"week": 5, "score": 64.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 61.0, "flagged": false, "category": "", "note": ""}]}, {"name": "جود سليمان", "class_name": "الصف السادس", "insight": "يبدو أن جود يمر بوقت يحتاج فيه لبعض الدعم العاطفي، حيث تظهر عليه مشاعر حزن تؤثر قليلاً على نشاطه واهتمامه المدرسي.", "weekly": [{"week": 1, "score": 96.0, "flagged": false, "category": "", "note": ""}, {"week": 2, "score": 95.0, "flagged": false, "category": "", "note": ""}, {"week": 3, "score": 93.0, "flagged": false, "category": "", "note": ""}, {"week": 4, "score": 90.0, "flagged": true, "category": "نفسي", "note": "حزن ملحوظ ومستمر"}, {"week": 5, "score": 87.0, "flagged": false, "category": "", "note": ""}, {"week": 6, "score": 85.0, "flagged": true, "category": "نفسي", "note": "حزن ملحوظ ومستمر"}]}], "low_count": 19, "total": 30}, "report_status": {"status": "قيد المراجعة", "notes": ""}};
+var STUDENTS = PAYLOAD.students;
+var WEEKLY_REPORT = PAYLOAD.report;
+var REPORT_STATUS = PAYLOAD.report_status;
+
+var CLASS_ORDER = ["الصف الأول","الصف الثاني","الصف الثالث","الصف الرابع","الصف الخامس","الصف السادس"];
+
+
+/* =========================================
+   STUDENTS TAB — grouped by class
+========================================= */
+
+function badgeShortLabel(statusKey){
+  if(statusKey === "red") return "تدخل";
+  if(statusKey === "orange") return "متابعة";
+  return "طبيعي";
+}
+
+function renderStudentsTab(){
+
+  var container = document.getElementById("students-by-class");
+  container.innerHTML = "";
+
+  var classes = CLASS_ORDER.slice();
+  STUDENTS.forEach(function(s){
+    if(classes.indexOf(s.className) === -1) classes.push(s.className);
+  });
+
+  classes.forEach(function(className){
+
+    var group = STUDENTS.filter(function(s){ return s.className === className; });
+    if(group.length === 0) return;
+
+    var wrap = document.createElement("div");
+    wrap.style.marginBottom = "22px";
+
+    var head = document.createElement("div");
+    head.style.cssText = "display:flex;justify-content:space-between;align-items:center;margin-bottom:10px";
+    head.innerHTML =
+      '<h3 style="margin:0;color:var(--teal-dark);font-size:15px">' + className +
+      ' <span style="color:var(--muted);font-weight:normal;font-size:12px">(' + group.length + ' طالب)</span></h3>' +
+      '<button class="view-btn" onclick="openAddStudent(\'' + className + '\')">+ إضافة طالب</button>';
+
+    var tableWrap = document.createElement("div");
+    tableWrap.className = "table-wrap";
+
+    var rows = group.map(function(s){
+      return (
+        '<tr onclick="openStudent(\'' + s.id + '\')">' +
+        '<td><b>' + s.name + '</b></td>' +
+        '<td>' + s.performanceLabel + '</td>' +
+        '<td><span class="badge ' + s.statusKey + '">' + badgeShortLabel(s.statusKey) + '</span></td>' +
+        '<td>عرض ←</td>' +
+        '</tr>'
+      );
+    }).join("");
+
+    tableWrap.innerHTML =
+      '<table><thead><tr><th>الطالب</th><th>الأداء الدراسي</th><th>الحالة</th><th></th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table>';
+
+    wrap.appendChild(head);
+    wrap.appendChild(tableWrap);
+    container.appendChild(wrap);
+  });
+}
+
+
+/* =========================================
+   ADD STUDENT (specialist only)
+========================================= */
+
+function openAddStudent(presetClass){
+  document.getElementById("new-student-name").value = "";
+  document.getElementById("new-student-note").value = "";
+  document.getElementById("new-student-status").value = "green";
+  if(presetClass){
+    document.getElementById("new-student-class").value = presetClass;
+  }
+  showPage("add-student");
+}
+
+function saveNewStudent(){
+
+  var name = document.getElementById("new-student-name").value.trim();
+  var className = document.getElementById("new-student-class").value;
+  var statusKey = document.getElementById("new-student-status").value;
+  var note = document.getElementById("new-student-note").value.trim();
+
+  if(!name){
+    alert("الرجاء إدخال اسم الطالب.");
+    return;
+  }
+
+  var statusLabels = {
+    green:"🟢 طبيعي", orange:"🟠 يحتاج متابعة", red:"🔴 يحتاج تدخل"
+  };
+  var performanceLabels = {
+    green:"→ مستقر", orange:"→ مستقر", red:"📉 متراجع"
+  };
+
+  var id = "s" + Date.now();
+
+  STUDENTS.push({
+    id:id,
+    name:name,
+    className:className,
+    score:"—",
+    statusKey:statusKey,
+    statusLabel:statusLabels[statusKey],
+    performanceLabel:performanceLabels[statusKey],
+    tags: note ? [note, "✍️ أُضيف يدوياً"] : ["✍️ أُضيف يدوياً"],
+    insight: note
+      ? ("لوحظ من الأخصائي عند التسجيل: " + note + ". تمت إضافة الحالة يدوياً وتحتاج متابعة لتكوين تحليل كامل.")
+      : "تمت إضافة هذا الطالب يدوياً. لا توجد بيانات كافية بعد لتحليل شامل — يُنصح بالمتابعة خلال الأسابيع القادمة."
+  });
+
+  renderStudentsTab();
+  renderAlerts();
+  renderOverview();
+  showPage("specialist-dashboard");
+  specialistTabByName("students");
+}
+
+function specialistTabByName(tab){
+  document.getElementById("alerts-tab").style.display="none";
+  document.getElementById("students-tab").style.display="none";
+  document.getElementById("overview-tab").style.display="none";
+  document.getElementById("reports-tab").style.display="none";
+  document.getElementById(tab+"-tab").style.display="block";
+
+  document.querySelectorAll(".nav button").forEach(function(btn){
+    btn.classList.remove("active");
+  });
+  var idx = tab === "alerts" ? 0 : (tab === "students" ? 1 : (tab === "overview" ? 2 : 3));
+  document.querySelectorAll(".nav button")[idx].classList.add("active");
+}
+
+
+/* =========================================
+   ALERTS TAB — dynamic, all classes
+========================================= */
+
+function renderAlerts(){
+  var grid = document.getElementById("alerts-grid");
+  var alertsOnly = STUDENTS.filter(function(s){
+    return s.statusKey === "red" || s.statusKey === "orange";
+  });
+
+  if(alertsOnly.length === 0){
+    grid.innerHTML = '<p style="color:var(--muted);font-size:14px">لا توجد حالات تستدعي انتباهاً حالياً.</p>';
+    return;
+  }
+
+  grid.innerHTML = alertsOnly.map(function(s){
+    var tagsHtml = s.tags.map(function(t){ return '<span class="tag">' + t + '</span>'; }).join("");
+    var scoreDisplay = (s.score && s.score !== "—") ? s.score : "—";
+
+    return (
+      '<div class="alert-card" style="border-right-color:var(--' + s.statusKey + ')">' +
+      '<div class="alert-top">' +
+        '<div>' +
+          '<div class="student-name">' + s.name + '</div>' +
+          '<div class="student-class">' + s.className + '</div>' +
+        '</div>' +
+        '<span class="badge ' + s.statusKey + '">' + s.statusLabel + '</span>' +
+      '</div>' +
+      '<div class="alert-score">' +
+        '<div class="score-number" style="color:var(--' + s.statusKey + ')">' + scoreDisplay + '</div>' +
+        '<div class="score-label">آخر معدل مرصود</div>' +
+      '</div>' +
+      '<div class="tags">' + tagsHtml + '</div>' +
+      '<div class="insight"><b>✦ البصيرة الذكية</b><br>' + s.insight + '</div>' +
+      '<button class="view-btn" onclick="openStudent(\'' + s.id + '\')">عرض ملف الطالب ←</button>' +
+      '</div>'
+    );
+  }).join("");
+}
+
+
+/* =========================================
+   OVERVIEW TAB — dynamic counts
+========================================= */
+
+function renderOverview(){
+  var total = STUDENTS.length;
+  var green = STUDENTS.filter(function(s){ return s.statusKey === "green"; }).length;
+  var orange = STUDENTS.filter(function(s){ return s.statusKey === "orange"; }).length;
+  var red = STUDENTS.filter(function(s){ return s.statusKey === "red"; }).length;
+
+  var pct = function(n){ return total ? Math.round((n / total) * 100) : 0; };
+  var greenPct = pct(green), orangePct = pct(orange), redPct = pct(red);
+
+  document.getElementById("ov-total").textContent = total;
+  document.getElementById("ov-green").textContent = green;
+  document.getElementById("ov-orange").textContent = orange;
+  document.getElementById("ov-red").textContent = red;
+  document.getElementById("ov-donut-total").textContent = total;
+
+  document.getElementById("ov-green-pct").textContent = greenPct + "%";
+  document.getElementById("ov-orange-pct").textContent = orangePct + "%";
+  document.getElementById("ov-red-pct").textContent = redPct + "%";
+
+  document.getElementById("ov-green-fill").style.width = greenPct + "%";
+  document.getElementById("ov-orange-fill").style.width = orangePct + "%";
+  document.getElementById("ov-red-fill").style.width = redPct + "%";
+
+  var donut = document.getElementById("ov-donut");
+  donut.style.background =
+    "conic-gradient(var(--green) 0 " + greenPct + "%, " +
+    "var(--orange) " + greenPct + "% " + (greenPct + orangePct) + "%, " +
+    "var(--red) " + (greenPct + orangePct) + "% 100%)";
+
+  var tip = document.getElementById("ov-tip-text");
+  if(red === 0 && orange === 0){
+    tip.textContent = "جميع الطلاب ضمن المستوى الطبيعي حالياً — لا توجد حالات تستدعي الانتباه.";
+  } else {
+    tip.textContent =
+      "أغلب الطلاب ضمن المستوى الطبيعي، بينما " + (orange + red) +
+      " طالب يحتاجون متابعة أو تدخل من الأخصائيين، بناءً على تحليل الوكيل الذكي.";
+  }
+}
+
+
+/* =========================================
+   STUDENT PROFILE
+========================================= */
+
+var currentProfileId = null;
+
+function openStudent(id){
+
+  var student = STUDENTS.filter(function(s){ return s.id === id; })[0];
+  if(!student) return;
+
+  currentProfileId = id;
+
+  document.getElementById("profile-name").textContent =
+    student.name;
+
+  document.getElementById("profile-meta").textContent =
+    student.className + " · ملف الطالب";
+
+  document.getElementById("profile-badge").textContent =
+    student.statusLabel;
+
+  document.getElementById("profile-badge").className =
+    "badge " + student.statusKey;
+
+  document.getElementById("profile-insight").textContent =
+    student.insight;
+
+  document.getElementById("manual-note-text").value = "";
+  document.getElementById("manual-note-status").textContent = "";
+
+  showPage("student-profile");
+}
+
+function submitManualNote(){
+  var text = document.getElementById("manual-note-text").value.trim();
+  var category = document.getElementById("manual-note-category").value;
+  var statusEl = document.getElementById("manual-note-status");
+
+  if(!text || !currentProfileId){
+    statusEl.textContent = "اكتبي نص الملاحظة أولاً.";
+    return;
+  }
+
+  statusEl.textContent = "جاري الحفظ...";
+
+  fetch("/add-note", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ student_id: currentProfileId, note: text, category: category })
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    if(data.ok){
+      statusEl.textContent = "✓ تمت الإضافة، جاري التحديث...";
+      setTimeout(function(){ location.reload(); }, 600);
+    } else {
+      statusEl.textContent = data.error || "صار خطأ، حاولي مرة ثانية.";
+    }
+  })
+  .catch(function(){
+    statusEl.textContent = "تعذر الوصول للسيرفر.";
+  });
+}
+
+/* =========================================
+   SARAH VOICE — speech-to-text + text-to-speech
+   (تستخدم واجهات المتصفح المدمجة، بدون أي خدمة خارجية)
+========================================= */
+
+var voiceRepliesOn = true;
+var isRecording = false;
+var recognizer = null;
+
+var SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if(SpeechRecognitionAPI){
+  recognizer = new SpeechRecognitionAPI();
+  recognizer.lang = "ar-SA";
+  recognizer.continuous = false;
+  recognizer.interimResults = false;
+
+  recognizer.onresult = function(event){
+    var transcript = event.results[0][0].transcript;
+    document.getElementById("chat-input").value = transcript;
+    sendChatMessage();
+  };
+
+  recognizer.onerror = function(){
+    stopRecordingUI();
+    addChatBubble("sara", "ما قدرت أسمعك بوضوح، جربي مرة ثانية أو اكتبي سؤالك.");
+  };
+
+  recognizer.onend = function(){
+    stopRecordingUI();
+  };
+} else {
+  document.getElementById("chat-mic").disabled = true;
+  document.getElementById("chat-mic").title = "الإدخال الصوتي غير مدعوم في هذا المتصفح — جربي Chrome";
+}
+
+function toggleMic(){
+  if(!SpeechRecognitionAPI) return;
+
+  if(isRecording){
+    recognizer.stop();
+    return;
+  }
+
+  // إيقاف أي صوت شغّال لسارة قبل ما نبدأ نسمعها
+  window.speechSynthesis.cancel();
+
+  isRecording = true;
+  document.getElementById("chat-mic").classList.add("recording");
+  recognizer.start();
+}
+
+function stopRecordingUI(){
+  isRecording = false;
+  document.getElementById("chat-mic").classList.remove("recording");
+}
+
+function toggleVoiceReplies(){
+  voiceRepliesOn = !voiceRepliesOn;
+  document.getElementById("chat-voice-toggle").classList.toggle("muted", !voiceRepliesOn);
+  document.getElementById("chat-voice-toggle").textContent = voiceRepliesOn ? "🔊" : "🔇";
+  if(!voiceRepliesOn) window.speechSynthesis.cancel();
+}
+
+var currentUtterance = null;
+var availableVoices = [];
+var speechKeepAliveTimer = null;
+
+if(window.speechSynthesis){
+  // الأصوات ما تكون جاهزة فوراً بأغلب المتصفحات، لازم ننتظر هذا الحدث
+  window.speechSynthesis.onvoiceschanged = function(){
+    availableVoices = window.speechSynthesis.getVoices();
+  };
+  availableVoices = window.speechSynthesis.getVoices();
+}
+
+function speakText(text){
+  if(!voiceRepliesOn || !window.speechSynthesis) return;
+
+  window.speechSynthesis.cancel();
+  if(speechKeepAliveTimer) clearInterval(speechKeepAliveTimer);
+
+  // نخزّن الجملة بمتغيّر خارجي عشان Chrome ما "يمسحها" من الذاكرة
+  // قبل ما تخلص قراءتها (علة معروفة بمتصفح Chrome)
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.lang = "ar-SA";
+  currentUtterance.rate = 1;
+
+  var voices = availableVoices.length ? availableVoices : window.speechSynthesis.getVoices();
+  var arabicVoice = voices.find(function(v){ return v.lang && v.lang.indexOf("ar") === 0; });
+  if(arabicVoice) currentUtterance.voice = arabicVoice;
+
+  currentUtterance.onend = function(){
+    if(speechKeepAliveTimer) clearInterval(speechKeepAliveTimer);
+  };
+
+  window.speechSynthesis.speak(currentUtterance);
+
+  // علة معروفة بـ Chrome: الصوت يتوقف بصمت بعد ~15 ثانية على الجمل الطويلة.
+  // هذا الحل المتداول: نوقف ونكمل الصوت كل ١٤ ثانية عشان "يصحّى" المتصفح
+  speechKeepAliveTimer = setInterval(function(){
+    if(!window.speechSynthesis.speaking){
+      clearInterval(speechKeepAliveTimer);
+      return;
+    }
+    window.speechSynthesis.pause();
+    window.speechSynthesis.resume();
+  }, 14000);
+}
+
+
+/* =========================================
+   SARAH CHAT (real backend via chat_server.py)
+========================================= */
+
+var CHAT_SERVER_URL = (location.protocol === "file:") ? "http://localhost:8787/chat" : "/chat";
+var chatHistory = [];
+var chatOpened = false;
+
+function toggleChat(){
+  var panel = document.getElementById("chat-panel");
+  chatOpened = !chatOpened;
+  panel.classList.toggle("open", chatOpened);
+
+  if(chatOpened && chatHistory.length === 0){
+    var welcome = "أهلاً! أنا سارة، مساعدتك داخل النظام. اسأليني عن أي طالب أو حالة، أو عن " +
+      "معنى أي تنبيه تشوفينه بالداشبورد.";
+    addChatBubble("sara", welcome);
+    speakText(welcome);
+  }
+}
+
+function addChatBubble(who, text){
+  var messages = document.getElementById("chat-messages");
+  var bubble = document.createElement("div");
+  bubble.className = "chat-bubble " + who;
+  bubble.textContent = text;
+  messages.appendChild(bubble);
+  messages.scrollTop = messages.scrollHeight;
+  return bubble;
+}
+
+function sendChatMessage(){
+  var input = document.getElementById("chat-input");
+  var text = input.value.trim();
+  if(!text) return;
+
+  addChatBubble("user", text);
+  input.value = "";
+
+  var pending = addChatBubble("sara", "سارة تكتب...");
+  pending.classList.add("pending");
+
+  fetch(CHAT_SERVER_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text, history: chatHistory })
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    pending.remove();
+    addChatBubble("sara", data.reply);
+    speakText(data.reply);
+    chatHistory.push({ role:"user", content:text });
+    chatHistory.push({ role:"assistant", content:data.reply });
+  })
+  .catch(function(err){
+    pending.remove();
+    addChatBubble("sara",
+      "تعذر الوصول للسيرفر المحلي. تأكدي أن chat_server.py شغّال بنافذة طرفية " +
+      "منفصلة (python3 chat_server.py) ثم أعيدي المحاولة."
+    );
+  });
+}
+
+document.getElementById("chat-input").addEventListener("keydown", function(e){
+  if(e.key === "Enter") sendChatMessage();
+});
+
+
+/* =========================================
+   REPORTS TAB
+========================================= */
+
+function weeklyTableHtml(weekly){
+  if(!weekly || !weekly.length) return "";
+  var rows = weekly.map(function(w){
+    var noteCell = w.flagged
+      ? '<span style="color:var(--red)">' + w.category + ' — ' + w.note + '</span>'
+      : '<span style="color:var(--muted)">لا شيء</span>';
+    return '<tr><td>أ' + w.week + '</td><td>' + w.score + '</td><td>' + noteCell + '</td></tr>';
+  }).join("");
+
+  return `
+    <table style="width:100%;font-size:12px;margin:6px 0 12px;border-collapse:collapse">
+      <thead>
+        <tr style="text-align:right;color:var(--muted)">
+          <th style="padding:4px 6px">الأسبوع</th>
+          <th style="padding:4px 6px">الدرجة</th>
+          <th style="padding:4px 6px">الملاحظة السلوكية</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+function renderReports(){
+  var r = WEEKLY_REPORT;
+  var status = REPORT_STATUS.status || "قيد المراجعة";
+
+  var highRows = r.high.map(function(s){
+    return '<div class="report-item" style="flex-direction:column;align-items:stretch">' +
+      '<div style="display:flex;justify-content:space-between"><b>' + s.name + '</b><span>' + s.class_name + '</span></div>' +
+      '<div style="font-size:12.5px;margin:4px 0">' + s.insight + '</div>' +
+      weeklyTableHtml(s.weekly) +
+      '</div>';
+  }).join("") || '<p style="font-size:13px;color:var(--muted)">لا توجد حالات حرجة.</p>';
+
+  var mediumRows = r.medium.map(function(s){
+    return '<div class="report-item" style="flex-direction:column;align-items:stretch">' +
+      '<div style="display:flex;justify-content:space-between"><b>' + s.name + '</b><span>' + s.class_name + '</span></div>' +
+      '<div style="font-size:12.5px;margin:4px 0">' + s.insight + '</div>' +
+      weeklyTableHtml(s.weekly) +
+      '</div>';
+  }).join("") || '<p style="font-size:13px;color:var(--muted)">لا توجد حالات تحتاج متابعة.</p>';
+
+  document.getElementById("report-card").innerHTML = `
+    <div class="report-head">
+      <div>
+        <p class="report-title">${r.title}</p>
+        <p class="report-date">بتاريخ ${r.date} · إجمالي ${r.total} طالب</p>
+      </div>
+      <span class="report-status-badge ${status}">${status}</span>
+    </div>
+
+    <div class="report-summary">${r.summary}</div>
+
+    <p class="report-section-title">🔴 حالات تحتاج تدخلاً (${r.high.length})</p>
+    ${highRows}
+
+    <p class="report-section-title">🟠 حالات تحتاج متابعة (${r.medium.length})</p>
+    ${mediumRows}
+
+    <p class="report-section-title">🟢 ضمن المستوى الطبيعي</p>
+    <p style="font-size:13px;color:var(--muted)">${r.low_count} طالب</p>
+
+    ${REPORT_STATUS.notes ? '<p class="report-section-title">ملاحظة الأخصائي</p><p style="font-size:13px">' + REPORT_STATUS.notes + '</p>' : ''}
+
+    <div class="report-actions">
+      <button class="accept" onclick="reportAction('accept')">✓ قبول التقرير</button>
+      <button class="reject" onclick="reportAction('reject')">✕ رفض التقرير</button>
+      <button onclick="toggleReportEdit()">✏️ تعديل</button>
+      <button onclick="window.print()">🖨️ طباعة</button>
+    </div>
+
+    <div class="report-edit-box" id="report-edit-box" style="display:none">
+      <textarea id="report-edit-text" placeholder="اكتبي ملاحظتك أو تعديلك على التقرير...">${REPORT_STATUS.notes || ""}</textarea>
+      <button onclick="saveReportEdit()" style="margin-top:8px">حفظ التعديل</button>
+    </div>
+  `;
+}
+
+function toggleReportEdit(){
+  var box = document.getElementById("report-edit-box");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+function saveReportEdit(){
+  var text = document.getElementById("report-edit-text").value;
+  reportAction("edit", text);
+}
+
+function reportAction(action, notes){
+  fetch("/report-action", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: action, notes: notes || "" })
+  })
+  .then(function(res){ return res.json(); })
+  .then(function(data){
+    if(data.ok){
+      REPORT_STATUS = data.status;
+      renderReports();
+    }
+  })
+  .catch(function(){
+    alert("تعذر الوصول للسيرفر لحفظ الإجراء.");
+  });
+}
+
+
+renderStudentsTab();
+renderAlerts();
+renderOverview();
+renderReports();
+
+
+
+</script>
+
+</body>
+</html>
