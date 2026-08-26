@@ -475,6 +475,14 @@ def to_app_student(case: StudentCase, outcome: Dict) -> Dict:
 
     insight = outcome["llm_insight"] or outcome["recommendation"]
 
+    weekly = [
+        {
+            "week": r.week, "score": r.academic_score, "flagged": r.behavior_flag,
+            "category": r.behavior_category, "note": r.behavior_note,
+        }
+        for r in case.records
+    ]
+
     return {
         "id": case.student_id,
         "name": case.name,
@@ -485,6 +493,7 @@ def to_app_student(case: StudentCase, outcome: Dict) -> Dict:
         "performanceLabel": TREND_TO_PERFORMANCE_LABEL.get(outcome["trend"], "→ مستقر"),
         "tags": notes if notes else ["✅ لا توجد مؤشرات سلوكية"],
         "insight": insight,
+        "weekly": weekly,
     }
 
 
