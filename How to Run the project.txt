@@ -17,7 +17,7 @@ A dashboard for a school specialist (الأخصائية) that flags
 elementary students who may need attention. It reads weekly data
 (grades + behavioral notes) for 30 students, runs a real AI agent
 over each one, and shows: alerts, student profiles, statistics,
-a weekly report, and a chat assistant called "سارة" (Sarah).
+a weekly report, and a chat assistant called "أورا" (Aura).
 
 All AI in this project runs on GOOGLE GEMINI only.
 
@@ -42,7 +42,7 @@ just write  ./.venv/bin/python  instead of  python3
 
 ----------------------------------------------------------------
 OPTION A — FULL LOCAL RUN  (RECOMMENDED)
-Dashboard + Sarah chat + saving notes + report buttons
+Dashboard + Aura chat + saving notes + report buttons
 ----------------------------------------------------------------
 
   Step 1) Open the Terminal app.
@@ -67,7 +67,7 @@ Dashboard + Sarah chat + saving notes + report buttons
   Step 6) LEAVE THE TERMINAL WINDOW OPEN while you use the site.
           To stop the server press  Ctrl + C  in the Terminal.
 
-  Everything works in this mode: Sarah answers, manual notes are
+  Everything works in this mode: Aura answers, manual notes are
   saved to the server, and the accept/reject/edit report buttons
   are saved too.
 
@@ -82,7 +82,7 @@ OPTION B — QUICK LOOK, NO SERVER
 
   IMPORTANT LIMITATION: in this mode the page is not connected to
   any server, so these three things will NOT work:
-      - Sarah's chat (it will say it cannot reach the server)
+      - Aura's chat (it will say it cannot reach the server)
       - saving a manual note on a student
       - the accept / reject / edit report buttons
   Use Option A if you need those. Printing the report works fine.
@@ -158,7 +158,7 @@ REFRESHING THE AI ANALYSIS  (app_agent.py)
   So: if you want the professor to SEE Gemini's own written
   analysis for each student, demo with app.html (Option B), or
   ask us to connect the server to those saved results as well.
-  Sarah's chat always uses Gemini in every mode.
+  Aura's chat always uses Gemini in every mode.
 
 
 ----------------------------------------------------------------
@@ -193,7 +193,7 @@ CHANGING THE AI MODEL
       gemini-3.5-flash       → smarter but slow, ~47 seconds per student.
       gemini-3.7-flash       → newest, sometimes returns "high demand".
 
-  Both the analysis engine and Sarah's chat use this same line.
+  Both the analysis engine and Aura's chat use this same line.
 
 
 ----------------------------------------------------------------
@@ -216,18 +216,18 @@ TROUBLESHOOTING
       You typed port 5000 instead of 5050. Port 5000 on macOS
       belongs to AirPlay Receiver, not to this project.
 
-  Sarah says "الحصة المجانية لهذه الدقيقة امتلأت"
+  Aura says "الحصة المجانية لهذه الدقيقة امتلأت"
       You sent too many messages in one minute (free plan limit
       is 15/minute). Wait one minute and continue.
 
-  Sarah says "مفتاح GEMINI_API_KEY غير صالح"
+  Aura says "مفتاح GEMINI_API_KEY غير صالح"
       The key in config.txt is wrong or expired. Get a new free
       one from aistudio.google.com and paste it into config.txt.
 
-  Sarah says "النموذج مزحوم حالياً"
+  Aura says "النموذج مزحوم حالياً"
       Google's servers are busy. Wait a few moments and retry.
 
-  The dashboard opens but Sarah / notes / report buttons do nothing
+  The dashboard opens but Aura / notes / report buttons do nothing
       You opened app.html directly (Option B). Use Option A.
 
   The microphone or voice does not work
@@ -280,7 +280,7 @@ FILES IN THIS FOLDER
 لوحة تحكم للأخصائية بمدرسة ابتدائية، ترصد الطلبة اللي يحتاجون
 انتباه. النظام يقرأ بيانات أسبوعية (درجات + ملاحظات سلوكية) لـ ٣٠
 طالب، ويشغّل وكيل ذكاء اصطناعي حقيقي على كل طالب، ويعرض: تنبيهات،
-ملفات الطلاب، إحصائيات، تقرير أسبوعي، وشات "سارة".
+ملفات الطلاب، إحصائيات، تقرير أسبوعي، وشات "أورا".
 
 كل الذكاء الاصطناعي بالمشروع على Google Gemini فقط.
 
@@ -302,7 +302,7 @@ FILES IN THIS FOLDER
 
 ----------------------------------------------------------------
 الخيار أ) التشغيل الكامل محلياً  (الأفضل)
-داشبورد + شات سارة + حفظ الملاحظات + أزرار التقرير
+داشبورد + شات أورا + حفظ الملاحظات + أزرار التقرير
 ----------------------------------------------------------------
 
   ١) افتحي تطبيق Terminal
@@ -326,7 +326,7 @@ FILES IN THIS FOLDER
   ٦) اتركي نافذة الـ Terminal مفتوحة طول ما تستخدمين الموقع.
      لإيقاف السيرفر: اضغطي  Ctrl + C  بالـ Terminal
 
-  بهذا الوضع كل شي يشتغل: سارة ترد، والملاحظات تنحفظ فعلياً،
+  بهذا الوضع كل شي يشتغل: أورا ترد، والملاحظات تنحفظ فعلياً،
   وأزرار قبول/رفض/تعديل التقرير تنحفظ بالسيرفر.
 
 
@@ -340,7 +340,7 @@ FILES IN THIS FOLDER
 
   تنبيه مهم: بهذا الوضع الصفحة مو متصلة بأي سيرفر، فهذي الثلاثة
   ما راح تشتغل:
-      - شات سارة
+      - شات أورا
       - حفظ ملاحظة يدوية على طالب
       - أزرار قبول / رفض / تعديل التقرير
   لو تحتاجينها استخدمي الخيار أ. الطباعة تشتغل عادي.
@@ -411,7 +411,7 @@ FILES IN THIS FOLDER
   السريعة المدمجة، فيعرض النص القياسي المختصر بدلاً عنه.
   يعني: لو تبين الدكتور يشوف تحليل Gemini المكتوب لكل طالب، اعرضي
   من app.html (الخيار ب)، أو اطلبي منا نربط السيرفر بنفس النتائج
-  المحفوظة. شات سارة يستخدم Gemini بكل الأوضاع.
+  المحفوظة. شات أورا يستخدم Gemini بكل الأوضاع.
 
 
 ----------------------------------------------------------------
@@ -446,7 +446,7 @@ FILES IN THIS FOLDER
       gemini-3.5-flash       ← أذكى بس بطيء، ٤٧ ثانية للطالب.
       gemini-3.7-flash       ← الأحدث، أحياناً يرجّع "مزحوم".
 
-  نفس السطر يستخدمه محرك التحليل وشات سارة معاً.
+  نفس السطر يستخدمه محرك التحليل وشات أورا معاً.
 
 
 ----------------------------------------------------------------
@@ -469,18 +469,18 @@ FILES IN THIS FOLDER
       كتبتي المنفذ 5000 بدل 5050. المنفذ 5000 على الماك محجوز
       لخدمة AirPlay Receiver، مو لمشروعنا.
 
-  سارة تقول "الحصة المجانية لهذه الدقيقة امتلأت"
+  أورا تقول "الحصة المجانية لهذه الدقيقة امتلأت"
       أرسلتي رسائل كثيرة بدقيقة وحدة (الحد ١٥ بالدقيقة).
       انتظري دقيقة وكملي.
 
-  سارة تقول "مفتاح GEMINI_API_KEY غير صالح"
+  أورا تقول "مفتاح GEMINI_API_KEY غير صالح"
       المفتاح بملف config.txt غلط أو منتهي. احصلي على واحد
       جديد مجاناً من aistudio.google.com وحطيه بالملف.
 
-  سارة تقول "النموذج مزحوم حالياً"
+  أورا تقول "النموذج مزحوم حالياً"
       سيرفرات Google مشغولة. انتظري لحظات وأعيدي المحاولة.
 
-  الداشبورد يفتح بس سارة/الملاحظات/أزرار التقرير ما تشتغل
+  الداشبورد يفتح بس أورا/الملاحظات/أزرار التقرير ما تشتغل
       فتحتي app.html مباشرة (الخيار ب). استخدمي الخيار أ.
 
   المايك أو الصوت ما يشتغل

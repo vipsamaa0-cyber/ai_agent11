@@ -41,7 +41,7 @@ INPUT_CSV = BASE_DIR / "students_data_elementary.csv"
 TEMPLATE_HTML = BASE_DIR / "app_template.html"
 OUTPUT_HTML = BASE_DIR / "app.html"
 
-# النموذج المستخدم في كل أجزاء النظام (المحرك + شات سارة).
+# النموذج المستخدم في كل أجزاء النظام (المحرك + شات أورا).
 # اخترنا flash-lite لأنه سريع (٤ ثواني للطالب الواحد) وكافٍ تماماً
 # لمهام الأدوات هذي. بدائل مجرَّبة بنفس المفتاح:
 #   "gemini-3.5-flash"  → أذكى بس أبطأ بكثير (٤٧ ثانية للطالب)
@@ -468,17 +468,134 @@ TREND_TO_PERFORMANCE_LABEL = {
 }
 
 
+# ------------------------------------------------------------
+# ترجمة إنجليزية — يستخدمها زر "English" بالواجهة. البيانات الأصلية
+# كلها عربية (من CSV أو Gemini)، فنضيف نسخة إنجليزية موازية لكل حقل
+# نص ثابت (أسماء الطلاب معروفة مسبقاً، الملاحظات السلوكية من مجموعة
+# صغيرة محدودة، وتوصيات القواعد الحتمية ثابتة). ملاحظة Gemini الفعلية
+# (llm_insight) نص حر مختلف كل مرة، فما نترجمها هنا تلقائياً — تبقى
+# عربية إذا أعدتِ تشغيل app_agent.py ببيانات/مفتاح جديد.
+# ------------------------------------------------------------
+
+NAME_EN = {
+    "بدر المعمري": "Badr Al-Ma'amari", "بيان البلوشي": "Bayan Al-Balushi",
+    "بيان الحارثي": "Bayan Al-Harithi", "جود سليمان": "Jood Sulaiman",
+    "حمد الكيومي": "Hamad Al-Kiyumi", "خالد محمد": "Khalid Mohammed",
+    "دانة المعمري": "Dana Al-Ma'amari", "دانة سليمان": "Dana Sulaiman",
+    "راشد السعدي": "Rashid Al-Saadi", "راشد الكندي": "Rashid Al-Kindi",
+    "روان الحارثي": "Rawan Al-Harithi", "سارة الرواحي": "Sara Al-Rawahi",
+    "سارة السعدي": "Sara Al-Saadi", "سارة سليمان": "Sara Sulaiman",
+    "سلطان الحارثي": "Sultan Al-Harithi", "سلطان سليمان": "Sultan Sulaiman",
+    "شهد الكيومي": "Shahad Al-Kiyumi", "طارق أحمد": "Tariq Ahmed",
+    "طارق الكيومي": "Tariq Al-Kiyumi", "فاطمة العامري": "Fatima Al-Amri",
+    "فيصل السعدي": "Faisal Al-Saadi", "ليان الشحية": "Layan Al-Shahiya",
+    "ليان الغافري": "Layan Al-Ghafri", "ليان الكندي": "Layan Al-Kindi",
+    "ماجد السعدي": "Majid Al-Saadi", "مريم الغافري": "Maryam Al-Ghafri",
+    "مريم المعمري": "Maryam Al-Ma'amari", "ناصر الرواحي": "Nasser Al-Rawahi",
+    "نور محمد": "Noor Mohammed",
+}
+
+CLASS_EN = {
+    "الصف الأول": "Grade 1", "الصف الثاني": "Grade 2", "الصف الثالث": "Grade 3",
+    "الصف الرابع": "Grade 4", "الصف الخامس": "Grade 5", "الصف السادس": "Grade 6",
+}
+
+CATEGORY_EN = {"سلوكي": "Behavioral", "نفسي": "Psychological", "صحي": "Health", "": ""}
+
+NOTE_EN = {
+    "انعزال مبالغ فيه عن الزملاء": "Excessive isolation from peers",
+    "بكاء متكرر بدون سبب واضح": "Frequent crying without a clear reason",
+    "تشتت وانعدام تركيز حاد": "Severe distraction and lack of focus",
+    "حركة توتر غير معتادة": "Unusual restless movement",
+    "حزن ملحوظ ومستمر": "Noticeable, persistent sadness",
+    "شكوى متكررة من آلام جسدية": "Recurring complaints of physical pain",
+    "صعوبة الالتزام بالتعليمات": "Difficulty following instructions",
+    "علامات إعياء وتعب ظاهري": "Visible signs of fatigue and exhaustion",
+    "فقدان شهية ملحوظ": "Noticeable loss of appetite",
+    "": "",
+}
+
+TAG_EXTRA_EN = {
+    "✅ لا توجد مؤشرات سلوكية": "✅ No behavioral indicators",
+    "✍️ أُضيف يدوياً": "✍️ Added manually",
+}
+
+# توصيات المسار الحتمي (بدون Gemini) — تستخدمها web_app.py بكل زيارة
+RECOMMENDATION_EN = {
+    "تصعيد فوري للأخصائية للتدخل المباشر مع الأسرة.":
+        "Immediate escalation to the specialist for direct intervention with the family.",
+    "تنبيه ومتابعة أسبوعية دون تصعيد فوري.":
+        "Alert and weekly follow-up without immediate escalation.",
+    "لا حاجة للتدخل حالياً؛ يكتفى بالأرشفة.":
+        "No intervention needed at this time; archiving is sufficient.",
+}
+
+# ملاحظات Gemini الفعلية (llm_insight) لبيانات الطلاب التجريبية الحالية —
+# مترجمة يدوياً. لو تغيّرت بيانات CSV أو أُعيد تشغيل app_agent.py بمفتاح
+# جديد فراح يطلع نص عربي مختلف ما له ترجمة جاهزة هنا (يبقى عربي فقط).
+INSIGHT_EN_BY_ID = {
+    "E104": "Faisal seems to be going through a hard time, feeling sad and withdrawn, which is noticeably affecting his focus and activity in class.",
+    "E112": "Layan is showing clear signs of stress and physical fatigue alongside a decline in her school grades, which calls for gently supporting her and helping her manage her feelings.",
+    "E116": "The student Layan shows a noticeable academic decline coinciding with repeated notes about sadness and lack of focus in class.",
+    "E124": "The student Fatima Al-Amri shows clear signs of distraction and a continuous decline in academic achievement over the weeks, which calls for urgent follow-up and educational support.",
+    "E130": "Dana shows a noticeable decline in academic achievement alongside repeated health complaints and physical fatigue, which calls for reaching out to the family and checking on her general condition.",
+    "E101": "Nasser sometimes seems tired in class, and his focus is gradually declining along with signs of physical fatigue that need to be followed up with care and attention.",
+    "E105": "The student Bayan Al-Harithi shows repeated health complaints and a slight drop in grades, which may indicate she is under physical strain or fatigue that has affected her school activity.",
+    "E114": "Majid shows a tendency to withdraw alongside a slight decline in his grades; a friendly conversation with him could help understand what's on his mind.",
+    "E117": "Noor is a hardworking student in Grade 4 who has shown a slight decline in her academic level with no recorded behavioral issues, and may need gentle encouragement or a simple review to regain her usual activity.",
+    "E119": "Sara suffers from repeated distraction in class that has caused her grades to slowly drop, and needs our support to regain her focus and usual activity.",
+    "E127": "Jood seems to be going through a period that needs some emotional support, showing feelings of sadness that are slightly affecting his school activity and interest.",
+    "E102": "Tariq Ahmed shows a noticeable improvement in his academic level with complete stability and a record free of any negative behavioral notes.",
+    "E103": "The student Sara Al-Saadi shows a stable level in her grades and a record free of any behavioral notes, reflecting a positive and steady environment.",
+    "E106": "Rashid is a hardworking, academically stable student, with excellent and consistent grades and no behavioral notes of concern.",
+    "E107": "The student Badr in Grade 4 shows stable and excellent academic performance, with no negative behavioral notes hindering his progress.",
+    "E108": "Sara is an active child with a stable, good academic level across the weeks, with no behavioral notes worth mentioning.",
+    "E109": "The student Rawan's level is excellent and her grades have been stable over the past weeks, with no behavioral notes of concern.",
+    "E110": "The student Shahad's academic level is continuously improving, with no negative behavioral notes hindering her progress.",
+    "E111": "The student Tariq Al-Kiyumi shows stable and excellent academic performance across the weeks, with no recorded behavioral notes of concern.",
+    "E113": "Maryam is a hardworking child with stable grades, and has one minor note about following instructions. With a little encouragement she'll do even better!",
+    "E115": "Sara is an outstanding student showing noticeable improvement in her academic level week after week, with no negative behavioral notes.",
+    "E118": "The student Sultan's level is stable and his grades have been close over the past weeks, with no behavioral notes of concern.",
+    "E120": "Sultan is a student in Grade 3, his grades are stable and he has had no negative behavioral notes over the past weeks.",
+    "E121": "Khalid is a hardworking student whose academic level is steadily rising, with no behavioral notes of concern.",
+    "E122": "Maryam sometimes shows mild signs of stress, but her grades are stable and she completes her work well.",
+    "E123": "Rashid's academic level is stable with no behavioral notes of concern at this time.",
+    "E125": "The student Hamad's performance in Grade 6 has been excellent and stable over the past weeks, with no negative behavioral notes.",
+    "E126": "Layan is a wonderful child whose academic level is stable and reassuring, with no behavioral notes of concern at this time.",
+    "E128": "The student Bayan is academically stable with no recorded behavioral notes over the past weeks; her performance is excellent and quite normal.",
+    "E129": "Dana is a hardworking student with a stable and very good grade level, and no negative behavioral notes.",
+}
+
+
+def insight_en_for(student_id: str, insight_ar: str) -> str:
+    """يرجّع نسخة إنجليزية للملاحظة لو متوفرة (توصية حتمية معروفة أو
+    ملاحظة Gemini مترجمة يدوياً لهذا الطالب)، وإلا يرجّع نفس النص العربي."""
+    return RECOMMENDATION_EN.get(insight_ar) or INSIGHT_EN_BY_ID.get(student_id, insight_ar)
+
+
+def weekly_row_bilingual(r: "WeeklyRecord") -> Dict:
+    return {
+        "week": r.week, "score": r.academic_score, "flagged": r.behavior_flag,
+        "category": r.behavior_category, "note": r.behavior_note,
+        "categoryEn": CATEGORY_EN.get(r.behavior_category, r.behavior_category),
+        "noteEn": NOTE_EN.get(r.behavior_note, r.behavior_note),
+    }
+
+
 def to_app_student(case: StudentCase, outcome: Dict) -> Dict:
     status = LEVEL_TO_STATUS[outcome["alert_level"]]
     last_score = case.records[-1].academic_score if case.records else None
     notes = sorted({r.behavior_note for r in case.records if r.behavior_flag and r.behavior_note})
 
     insight = outcome["llm_insight"] or outcome["recommendation"]
+    tags = notes if notes else ["✅ لا توجد مؤشرات سلوكية"]
 
     weekly = [
         {
             "week": r.week, "score": r.academic_score, "flagged": r.behavior_flag,
             "category": r.behavior_category, "note": r.behavior_note,
+            "categoryEn": CATEGORY_EN.get(r.behavior_category, r.behavior_category),
+            "noteEn": NOTE_EN.get(r.behavior_note, r.behavior_note),
         }
         for r in case.records
     ]
@@ -487,12 +604,16 @@ def to_app_student(case: StudentCase, outcome: Dict) -> Dict:
         "id": case.student_id,
         "name": case.name,
         "className": case.class_name,
+        "nameEn": NAME_EN.get(case.name, case.name),
+        "classNameEn": CLASS_EN.get(case.class_name, case.class_name),
         "score": f"{int(last_score)}%" if last_score is not None else "—",
         "statusKey": status,
         "statusLabel": STATUS_LABEL[status],
         "performanceLabel": TREND_TO_PERFORMANCE_LABEL.get(outcome["trend"], "→ مستقر"),
-        "tags": notes if notes else ["✅ لا توجد مؤشرات سلوكية"],
+        "tags": tags,
+        "tagsEn": [TAG_EXTRA_EN.get(tg, NOTE_EN.get(tg, tg)) for tg in tags],
         "insight": insight,
+        "insightEn": insight_en_for(case.student_id, insight),
         "weekly": weekly,
     }
 
@@ -511,16 +632,7 @@ def generate_weekly_report(results: List[Dict], students: Dict[str, "StudentCase
         case = students.get(student_id)
         if not case:
             return []
-        return [
-            {
-                "week": r.week,
-                "score": r.academic_score,
-                "flagged": r.behavior_flag,
-                "category": r.behavior_category,
-                "note": r.behavior_note,
-            }
-            for r in case.records
-        ]
+        return [weekly_row_bilingual(r) for r in case.records]
 
     high = [r for r in results if r["statusKey"] == "red"]
     medium = [r for r in results if r["statusKey"] == "orange"]
@@ -533,18 +645,21 @@ def generate_weekly_report(results: List[Dict], students: Dict[str, "StudentCase
     else:
         summary = "جميع الطلاب ضمن المستوى الطبيعي هذا الأسبوع."
 
+    def report_entry(r):
+        return {
+            "id": r["id"], "name": r["name"], "class_name": r["className"], "insight": r["insight"],
+            "nameEn": NAME_EN.get(r["name"], r["name"]),
+            "class_nameEn": CLASS_EN.get(r["className"], r["className"]),
+            "insightEn": insight_en_for(r["id"], r["insight"]),
+            "weekly": weekly_rows(r["id"]),
+        }
+
     return {
         "date": date.today().isoformat(),
         "title": "تقرير الوكيل الأسبوعي",
         "summary": summary,
-        "high": [
-            {"name": r["name"], "class_name": r["className"], "insight": r["insight"], "weekly": weekly_rows(r["id"])}
-            for r in high
-        ],
-        "medium": [
-            {"name": r["name"], "class_name": r["className"], "insight": r["insight"], "weekly": weekly_rows(r["id"])}
-            for r in medium
-        ],
+        "high": [report_entry(r) for r in high],
+        "medium": [report_entry(r) for r in medium],
         "low_count": len(low),
         "total": len(results),
     }
@@ -561,13 +676,14 @@ def load_manual_notes_local() -> Dict:
 
 
 def load_report_status_local() -> Dict:
+    """حالة تقرير كل طالب على حدة: {student_id: {"status":..., "notes":...}}"""
     path = BASE_DIR / "report_status.json"
     if not path.exists():
-        return {"status": "قيد المراجعة", "notes": ""}
+        return {}
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
-        return {"status": "قيد المراجعة", "notes": ""}
+        return {}
 
 
 # ------------------------------------------------------------

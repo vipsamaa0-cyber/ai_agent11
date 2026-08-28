@@ -5,7 +5,7 @@
 
 هذا الملف يجمع كل شي بسيرفر واحد (Flask):
   - يخدم الموقع كامل (الداشبورد) على "/"
-  - يخدم محادثة سارة على "/chat"
+  - يخدم محادثة أورا على "/chat"
 
 بخلاف chat_server.py (اللي يحتاج تشغيل يدوي على جهازك + ملف
 منفصل للواجهة)، هذا الملف مصمم للنشر أونلاين على منصة استضافة
@@ -75,7 +75,8 @@ def load_manual_notes():
 
 
 def load_report_status():
-    return read_json(REPORT_STATUS_PATH, {"status": "قيد المراجعة", "notes": ""})
+    """حالة تقرير كل طالب على حدة: {student_id: {"status":..., "notes":...}}"""
+    return read_json(REPORT_STATUS_PATH, {})
 
 
 # ------------------------------------------------------------
@@ -98,7 +99,7 @@ except ImportError:
 # ملاحظة: هنا نستخدم القواعد الحتمية (بدون استدعاء Gemini) لأن
 # الصفحة تُبنى من جديد مع كل زيارة، و٣٠ استدعاء LLM لكل زيارة
 # بيكون بطيء ومكلف. تحليل Gemini الكامل يشتغل من app_agent.py
-# (شغّليه لما تتغير البيانات)، وسارة بالشات تستخدم Gemini مباشرة.
+# (شغّليه لما تتغير البيانات)، وأورا بالشات تستخدم Gemini مباشرة.
 # ------------------------------------------------------------
 
 @app.route("/")
@@ -163,8 +164,14 @@ def add_note():
 def report_action():
     body = request.get_json(force=True) or {}
     action = body.get("action")
+    student_id = body.get("student_id")
 
-    status = load_report_status()
+    if not student_id:
+        return jsonify({"ok": False, "error": "student_id مطلوب"}), 400
+
+    all_status = load_report_status()
+    status = all_status.get(student_id, {"status": "قيد المراجعة", "notes": ""})
+
     if action == "accept":
         status["status"] = "مقبول"
     elif action == "reject":
@@ -175,15 +182,16 @@ def report_action():
     else:
         return jsonify({"ok": False, "error": "إجراء غير معروف"}), 400
 
-    write_json(REPORT_STATUS_PATH, status)
-    return jsonify({"ok": True, "status": status})
+    all_status[student_id] = status
+    write_json(REPORT_STATUS_PATH, all_status)
+    return jsonify({"ok": True, "student_id": student_id, "status": status})
 
 
 # ------------------------------------------------------------
-# محادثة سارة — نفس منطق chat_server.py بالضبط (Gemini)
+# محادثة أورا — نفس منطق chat_server.py بالضبط (Gemini)
 # ------------------------------------------------------------
 
-SYSTEM_PROMPT = """You are "Sarah" (سارة), an AI agent inside "البصيرة الرقمية" —
+SYSTEM_PROMPT = """You are "Aura" (أورا), an AI agent inside "البصيرة الرقمية" —
 a system that helps school specialists spot early behavioral and academic
 changes in students. You are not a simple chatbot: you have real tools to
 look up live student data, and you decide yourself, step by step, whether
@@ -239,6 +247,7 @@ def chat():
     body = request.get_json(force=True) or {}
     user_message = body.get("message", "")
     history = body.get("history", [])
+    student_id = body.get("student_id") or None
 
     if _client is None:
         reply = ("تعذر الاتصال بالنموذج اللغوي. تأكدي أن GEMINI_API_KEY مضبوط "
@@ -246,6 +255,20 @@ def chat():
         return jsonify({"reply": reply})
 
     students = load_students(INPUT_CSV)
+    system_prompt = SYSTEM_PROMPT
+
+    if student_id:
+        # صلاحية ولي الأمر: نقيّد بيانات الأدوات على طفله فقط، على مستوى
+        # البيانات نفسها (مو بس تعليمة بالبرومبت) — حتى لو النموذج
+        # حاول يسأل عن معرّف طالب ثاني، ما راح يلقى له بيانات إطلاقاً.
+        students = {student_id: students[student_id]} if student_id in students else {}
+        system_prompt += (
+            "\n\nIMPORTANT — parent scope: the current user is a parent, limited to ONE "
+            "student only. You have no data on any other student — the tools simply "
+            "return nothing for any other id. If asked about another student, say clearly "
+            "you don't have access to other students' data in this account."
+        )
+
     tools = build_tools(students)
 
     contents = []
@@ -259,7 +282,7 @@ def chat():
             model=LLM_MODEL,
             contents=contents,
             config=genai_types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
+                system_instruction=system_prompt,
                 tools=tools,
             ),
         )
@@ -276,7 +299,7 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5050))
 
     if _client is None:
-        print("! تحذير: GEMINI_API_KEY غير موجود — سارة لن ترد فعلياً محلياً.")
+        print("! تحذير: GEMINI_API_KEY غير موجود — أورا لن ترد فعلياً محلياً.")
     else:
         print(f"✓ Gemini جاهز — النموذج: {LLM_MODEL}")
     print(f"السيرفر شغّال محلياً على: http://localhost:{port}")

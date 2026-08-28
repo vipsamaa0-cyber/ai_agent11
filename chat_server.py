@@ -1,6 +1,6 @@
 """
 ==============================================================
- خادم "سارة" — AI Agent حقيقي عبر Google Gemini (مجاني، بدون بطاقة بنكية)
+ خادم "أورا" — AI Agent حقيقي عبر Google Gemini (مجاني، بدون بطاقة بنكية)
 ==============================================================
 
 وكيل حقيقي (أدوات حقيقية + قرار ذاتي أثناء المحادثة) يشتغل على
@@ -54,7 +54,7 @@ except ImportError:
     _client = None
 
 
-SYSTEM_PROMPT = """You are "Sarah" (سارة), an AI agent inside "البصيرة الرقمية" —
+SYSTEM_PROMPT = """You are "Aura" (أورا), an AI agent inside "البصيرة الرقمية" —
 a system that helps school specialists spot early behavioral and academic
 changes in students. You are not a simple chatbot: you have real tools to
 look up live student data, and you decide yourself, step by step, whether
@@ -109,13 +109,28 @@ def build_tools(students):
             calc_behavior_severity, calc_correlation]
 
 
-def run_chat_turn(user_message: str, history: list) -> str:
+def run_chat_turn(user_message: str, history: list, student_id: str = None) -> str:
     if _client is None:
         return ("تعذر الاتصال بالنموذج اللغوي. تأكدي أن ملف config.txt فيه "
                 "GEMINI_API_KEY صحيح (يبدأ بـ AIza) بنفس مجلد chat_server.py، "
                 "ثم أعيدي تشغيل السيرفر.")
 
     students = load_students(INPUT_CSV)
+    system_prompt = SYSTEM_PROMPT
+
+    if student_id:
+        # صلاحية ولي الأمر: نقيّد بيانات الأدوات على طفله فقط، على مستوى
+        # البيانات نفسها (مو بس تعليمة بالبرومبت) — حتى لو النموذج
+        # حاول يسأل عن معرّف طالب ثاني، ما راح يلقى له بيانات إطلاقاً.
+        restricted = {student_id: students[student_id]} if student_id in students else {}
+        students = restricted
+        system_prompt += (
+            "\n\nIMPORTANT — parent scope: the current user is a parent, limited to ONE "
+            "student only. You have no data on any other student — the tools simply "
+            "return nothing for any other id. If asked about another student, say clearly "
+            "you don't have access to other students' data in this account."
+        )
+
     tools = build_tools(students)
 
     contents = []
@@ -129,7 +144,7 @@ def run_chat_turn(user_message: str, history: list) -> str:
             model=LLM_MODEL,
             contents=contents,
             config=genai_types.GenerateContentConfig(
-                system_instruction=SYSTEM_PROMPT,
+                system_instruction=system_prompt,
                 tools=tools,
             ),
         )
@@ -161,9 +176,10 @@ class ChatHandler(BaseHTTPRequestHandler):
         body = json.loads(self.rfile.read(length) or b"{}")
         user_message = body.get("message", "")
         history = body.get("history", [])
+        student_id = body.get("student_id") or None
 
         try:
-            reply = run_chat_turn(user_message, history)
+            reply = run_chat_turn(user_message, history, student_id)
         except Exception as exc:
             reply = friendly_gemini_error(exc)
 
@@ -190,7 +206,7 @@ def run():
         print("  ثم شغّلي السيرفر من جديد.\n")
 
     server = HTTPServer(("localhost", PORT), ChatHandler)
-    print(f"سارة (AI Agent · Gemini) جاهزة على http://localhost:{PORT}  —  اتركي هذه النافذة مفتوحة.")
+    print(f"أورا (AI Agent · Gemini) جاهزة على http://localhost:{PORT}  —  اتركي هذه النافذة مفتوحة.")
     server.serve_forever()
 
 
