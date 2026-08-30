@@ -971,6 +971,266 @@ tr:hover td{
 }
 
 /* =========================
+   UX: FOCUS STATES (لوحة المفاتيح وسهولة الوصول)
+========================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible{
+  outline:2px solid var(--teal);
+  outline-offset:2px;
+  border-radius:4px;
+}
+
+/* =========================
+   UX: TOAST NOTIFICATIONS (نجاح/فشل العمليات)
+========================= */
+
+#toast-container{
+  position:fixed;
+  top:70px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+  pointer-events:none;
+  width:100%;
+  max-width:420px;
+  padding:0 14px;
+}
+
+.toast{
+  background:var(--white);
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 16px;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:var(--shadow-md);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  opacity:0;
+  transform:translateY(-10px);
+  transition:opacity .2s ease, transform .2s ease;
+  pointer-events:auto;
+}
+
+.toast.toast-show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.toast-icon{
+  flex-shrink:0;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  color:white;
+}
+
+.toast.success .toast-icon{ background:var(--green); }
+.toast.error .toast-icon{ background:var(--red); }
+.toast.info .toast-icon{ background:var(--teal); }
+
+.toast.success{ border-color:var(--green); }
+.toast.error{ border-color:var(--red); }
+
+/* =========================
+   UX: CONFIRM DIALOG (تأكيد العمليات المهمة)
+========================= */
+
+#confirm-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(8,18,16,.5);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  z-index:210;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease, visibility .18s ease;
+  padding:20px;
+}
+
+#confirm-backdrop.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.confirm-box{
+  background:var(--white);
+  border-radius:18px;
+  box-shadow:var(--shadow-lg);
+  padding:26px;
+  width:100%;
+  max-width:360px;
+  text-align:center;
+  transform:scale(.95);
+  transition:transform .18s ease;
+}
+
+#confirm-backdrop.open .confirm-box{
+  transform:scale(1);
+}
+
+.confirm-title{
+  font-size:16px;
+  font-weight:800;
+  margin:0 0 8px;
+  color:var(--text);
+}
+
+.confirm-text{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+  margin:0 0 20px;
+}
+
+.confirm-actions{
+  display:flex;
+  gap:10px;
+}
+
+.confirm-actions button{
+  flex:1;
+  border-radius:11px;
+  padding:11px;
+  font-size:13.5px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:filter .15s, transform .15s;
+}
+
+.confirm-cancel{
+  background:var(--bg);
+  border:1px solid var(--line);
+  color:var(--text);
+}
+
+.confirm-cancel:hover{
+  background:var(--line);
+}
+
+.confirm-ok{
+  background:var(--gradient-brand);
+  border:0;
+  color:white;
+}
+
+.confirm-ok.danger{
+  background:linear-gradient(135deg, var(--red), #a53629);
+}
+
+.confirm-ok:hover{
+  filter:brightness(1.08);
+}
+
+/* =========================
+   UX: SPINNER (تحميل داخل الأزرار)
+========================= */
+
+.btn-spinner{
+  display:inline-block;
+  width:13px;
+  height:13px;
+  border:2px solid rgba(255,255,255,.4);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:btn-spin .7s linear infinite;
+  vertical-align:middle;
+  margin-inline-end:6px;
+}
+
+.report-actions button .btn-spinner{
+  border-color:rgba(0,0,0,.15);
+  border-top-color:var(--teal);
+}
+
+@keyframes btn-spin{
+  to{ transform:rotate(360deg); }
+}
+
+/* =========================
+   UX: EMPTY STATE
+========================= */
+
+.empty-state{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--muted);
+}
+
+.empty-state-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.empty-state-title{
+  font-size:15px;
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:6px;
+}
+
+.empty-state-text{
+  font-size:13px;
+  line-height:1.7;
+  max-width:340px;
+  margin:0 auto;
+}
+
+/* =========================
+   UX: AI RECOMMENDATION CARD (نتيجة الوكيل + الإجراء المقترح)
+========================= */
+
+.ai-recommend{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:var(--bg);
+}
+
+.ai-recommend.red{ border-color:var(--red); background:var(--red-bg); }
+.ai-recommend.orange{ border-color:var(--orange); background:var(--orange-bg); }
+.ai-recommend.green{ border-color:var(--green); background:var(--green-bg); }
+
+.ai-recommend-title{
+  font-size:12.5px;
+  font-weight:800;
+  margin-bottom:4px;
+}
+
+.ai-recommend.red .ai-recommend-title{ color:var(--red); }
+.ai-recommend.orange .ai-recommend-title{ color:var(--orange); }
+.ai-recommend.green .ai-recommend-title{ color:var(--green); }
+
+.ai-recommend-text{
+  font-size:12.5px;
+  color:var(--text);
+  line-height:1.7;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -1340,6 +1600,32 @@ tr:hover td{
 }
 
 @media(max-width:700px){
+  #chat-panel{
+    top:auto;
+    left:0;
+    bottom:0;
+    width:100%;
+    max-width:100%;
+    height:92vh;
+    max-height:92vh;
+    border-radius:20px 20px 0 0;
+    transform:translateY(20px);
+  }
+
+  #chat-panel.open{
+    transform:translateY(0);
+  }
+
+  #toast-container{
+    left:12px;
+    right:12px;
+    width:auto;
+    max-width:none;
+    transform:none;
+  }
+}
+
+@media(max-width:700px){
 
   .role-cards{
     grid-template-columns:1fr;
@@ -1456,6 +1742,21 @@ tr:hover td{
 <div id="top-controls">
 <button id="theme-toggle" onclick="toggleTheme()" title="تبديل الوضع الليلي/العادي" data-i18n-title="title_theme_toggle">🌙</button>
 <button id="lang-toggle" onclick="toggleLang()" title="Switch language / تبديل اللغة">EN</button>
+</div>
+
+<!-- تنبيهات نجاح/فشل العمليات (Toast) — عامة بكل صفحات النظام -->
+<div id="toast-container"></div>
+
+<!-- نافذة تأكيد العمليات المهمة — عامة بكل صفحات النظام -->
+<div id="confirm-backdrop" onclick="if(event.target===this) closeConfirm(false)">
+  <div class="confirm-box">
+    <p class="confirm-title" id="confirm-title"></p>
+    <p class="confirm-text" id="confirm-text"></p>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" id="confirm-cancel-btn" type="button" onclick="closeConfirm(false)"></button>
+      <button class="confirm-ok" id="confirm-ok-btn" type="button" onclick="closeConfirm(true)"></button>
+    </div>
+  </div>
 </div>
 
 <!-- ==================================================
@@ -2124,17 +2425,9 @@ class="badge red">
 <div id="profile-insight">
 </div>
 
-<br>
-
-<b data-i18n="recommendation_label">التوصية:</b>
-
-<span data-i18n="recommendation_text">
-مراجعة الحالة مع الطالب،
-ومتابعة المؤشرات خلال الفترة القادمة
-قبل اتخاذ أي إجراء.
-</span>
-
 </div>
+
+<div id="profile-recommend"></div>
 
 <div class="manual-note-box">
 <h4 data-i18n="manual_note_title">✍️ إضافة ملاحظة يدوية (حالة لم ترصدها الكاميرا)</h4>
@@ -2674,7 +2967,26 @@ var TRANSLATIONS = {
     suggestion_specialist_1: "من يحتاج متابعة عاجلة؟",
     suggestion_specialist_2: "أعطيني ملخص الأسبوع",
     suggestion_parent_1: "كيف مستوى طفلي؟",
-    suggestion_parent_2: "أعطيني التقرير الأسبوعي"
+    suggestion_parent_2: "أعطيني التقرير الأسبوعي",
+
+    confirm_ok_default: "تأكيد",
+    confirm_cancel_default: "إلغاء",
+    confirm_accept_title: "قبول التقرير؟",
+    confirm_accept_text: "بعد القبول، يُعتمد هذا التقرير كتقييم نهائي لحالة الطالب.",
+    confirm_reject_title: "رفض التقرير؟",
+    confirm_reject_text: "بعد الرفض، يُعلَّم هذا التقرير كمرفوض ويحتاج مراجعة لاحقاً.",
+    toast_report_accepted: "✓ تم قبول التقرير بنجاح",
+    toast_report_rejected: "تم رفض التقرير",
+    toast_report_edited: "تم حفظ التعديل بنجاح",
+    toast_report_error: "تعذر حفظ الإجراء، تأكدي من اتصال السيرفر وحاولي مرة ثانية",
+    toast_note_added: "✓ تمت إضافة الملاحظة بنجاح",
+    ai_recommend_title: "✦ الإجراء المقترح",
+    ai_recommend_red: "تصعيد فوري للأخصائية للتدخل المباشر مع الأسرة في أقرب وقت.",
+    ai_recommend_orange: "تنبيه ومتابعة أسبوعية لملاحظة أي تطور بالحالة.",
+    ai_recommend_green: "لا حاجة لتدخل حالياً — يكتفى بالمتابعة الدورية المعتادة.",
+    empty_alerts_title: "لا توجد تنبيهات حالياً",
+    empty_alerts_text: "جميع الطلاب ضمن المستوى الطبيعي. أي طالب يحتاج متابعة أو تدخل عاجل بيظهر هنا فور رصده.",
+    please_write_note_and_select: "الرجاء كتابة الملاحظة أولاً."
   },
   en: {
     brand_name: "Digital Insight",
@@ -2866,7 +3178,26 @@ var TRANSLATIONS = {
     suggestion_specialist_1: "Who needs urgent follow-up?",
     suggestion_specialist_2: "Give me this week's summary",
     suggestion_parent_1: "How is my child doing?",
-    suggestion_parent_2: "Give me the weekly report"
+    suggestion_parent_2: "Give me the weekly report",
+
+    confirm_ok_default: "Confirm",
+    confirm_cancel_default: "Cancel",
+    confirm_accept_title: "Accept the report?",
+    confirm_accept_text: "Once accepted, this report is finalized as the student's assessment.",
+    confirm_reject_title: "Reject the report?",
+    confirm_reject_text: "Once rejected, this report will be marked as rejected and need a later review.",
+    toast_report_accepted: "✓ Report accepted successfully",
+    toast_report_rejected: "Report rejected",
+    toast_report_edited: "Edit saved successfully",
+    toast_report_error: "Couldn't save the action. Check the server connection and try again",
+    toast_note_added: "✓ Note added successfully",
+    ai_recommend_title: "✦ Suggested Action",
+    ai_recommend_red: "Immediate escalation to the specialist for direct intervention with the family as soon as possible.",
+    ai_recommend_orange: "Alert and weekly follow-up to monitor any development in the case.",
+    ai_recommend_green: "No intervention needed at this time — routine follow-up is sufficient.",
+    empty_alerts_title: "No alerts right now",
+    empty_alerts_text: "All students are within the normal range. Any student needing follow-up or urgent intervention will appear here as soon as it's detected.",
+    please_write_note_and_select: "Please write the note text first."
   }
 };
 
@@ -2902,6 +3233,61 @@ function tpl(key, params){
     text = text.replace("{" + k + "}", params[k]);
   });
   return text;
+}
+
+/* =========================================
+   UX: Toast (تنبيهات نجاح/فشل عابرة) — تُستخدم بكل الصفحات
+========================================= */
+
+function showToast(message, type){
+  var container = document.getElementById("toast-container");
+  if(!container) return;
+
+  var icon = type === "success" ? "✓" : (type === "error" ? "✕" : "ℹ");
+  var toast = document.createElement("div");
+  toast.className = "toast " + (type || "info");
+  toast.innerHTML = '<span class="toast-icon">' + icon + '</span><span></span>';
+  toast.lastElementChild.textContent = message;
+  container.appendChild(toast);
+
+  requestAnimationFrame(function(){ toast.classList.add("toast-show"); });
+
+  setTimeout(function(){
+    toast.classList.remove("toast-show");
+    setTimeout(function(){ toast.remove(); }, 250);
+  }, 3600);
+}
+
+/* =========================================
+   UX: نافذة تأكيد عامة للعمليات المهمة
+========================================= */
+
+var _confirmResolve = null;
+
+function showConfirm(title, text, opts){
+  opts = opts || {};
+  document.getElementById("confirm-title").textContent = title;
+  document.getElementById("confirm-text").textContent = text;
+
+  var okBtn = document.getElementById("confirm-ok-btn");
+  var cancelBtn = document.getElementById("confirm-cancel-btn");
+  okBtn.textContent = opts.okLabel || t("confirm_ok_default");
+  cancelBtn.textContent = opts.cancelLabel || t("confirm_cancel_default");
+  okBtn.className = "confirm-ok" + (opts.danger ? " danger" : "");
+
+  document.getElementById("confirm-backdrop").classList.add("open");
+
+  return new Promise(function(resolve){
+    _confirmResolve = resolve;
+  });
+}
+
+function closeConfirm(result){
+  document.getElementById("confirm-backdrop").classList.remove("open");
+  if(_confirmResolve){
+    _confirmResolve(result);
+    _confirmResolve = null;
+  }
 }
 
 /* =========================================
@@ -3068,7 +3454,7 @@ function specialistLogin(){
     document.getElementById("specialist-name").value.trim();
 
   if(!name){
-    alert(t("please_enter_name"));
+    showToast(t("please_enter_name"), "error");
     return;
   }
 
@@ -3144,7 +3530,7 @@ function parentLogin(){
 
   if(!civil || !password){
 
-    alert(t("please_enter_civil_id_password"));
+    showToast(t("please_enter_civil_id_password"), "error");
 
     return;
   }
@@ -3277,7 +3663,7 @@ function saveNewStudent(){
   var note = document.getElementById("new-student-note").value.trim();
 
   if(!name){
-    alert(t("please_enter_student_name"));
+    showToast(t("please_enter_student_name"), "error");
     return;
   }
 
@@ -3344,7 +3730,12 @@ function renderAlerts(){
   });
 
   if(alertsOnly.length === 0){
-    grid.innerHTML = '<p style="color:var(--muted);font-size:14px">' + t("no_alerts") + '</p>';
+    grid.innerHTML =
+      '<div class="empty-state" style="grid-column:1/-1">' +
+        '<div class="empty-state-icon">🟢</div>' +
+        '<div class="empty-state-title">' + t("empty_alerts_title") + '</div>' +
+        '<div class="empty-state-text">' + t("empty_alerts_text") + '</div>' +
+      '</div>';
     return;
   }
 
@@ -3422,6 +3813,18 @@ function renderOverview(){
 
 var currentProfileId = null;
 
+/* بطاقة "الإجراء المقترح" — توضّح للمستخدم ماذا تعني نتيجة الوكيل
+   الذكي وما الخطوة التالية المقترحة، حسب مستوى الحالة (أحمر/برتقالي/أخضر) */
+function aiRecommendHtml(statusKey){
+  var key = (statusKey === "red" || statusKey === "orange") ? statusKey : "green";
+  return (
+    '<div class="ai-recommend ' + key + '">' +
+      '<div class="ai-recommend-title">' + t("ai_recommend_title") + '</div>' +
+      '<div class="ai-recommend-text">' + t("ai_recommend_" + key) + '</div>' +
+    '</div>'
+  );
+}
+
 function openStudent(id){
 
   var student = STUDENTS.filter(function(s){ return s.id === id; })[0];
@@ -3443,6 +3846,9 @@ function openStudent(id){
 
   document.getElementById("profile-insight").textContent =
     sInsight(student);
+
+  document.getElementById("profile-recommend").innerHTML =
+    aiRecommendHtml(student.statusKey);
 
   document.getElementById("manual-note-text").value = "";
   document.getElementById("manual-note-status").textContent = "";
@@ -3819,6 +4225,12 @@ function findReportStudent(id){
   return WEEKLY_REPORT.high.concat(WEEKLY_REPORT.medium).filter(function(s){ return s.id === id; })[0] || null;
 }
 
+function findReportStatusKey(id){
+  if(WEEKLY_REPORT.high.some(function(s){ return s.id === id; })) return "red";
+  if(WEEKLY_REPORT.medium.some(function(s){ return s.id === id; })) return "orange";
+  return "green";
+}
+
 function reportListItemHtml(s){
   var st = (REPORT_STATUS[s.id] && REPORT_STATUS[s.id].status) || "قيد المراجعة";
   return '<div class="report-item report-item-clickable" onclick="openStudentReport(\'' + s.id + '\')">' +
@@ -3860,6 +4272,8 @@ function renderReports(){
 
         <div class="report-summary"><b>${t("smart_insight_label")}:</b> ${sInsight(s)}</div>
 
+        ${aiRecommendHtml(findReportStatusKey(s.id))}
+
         <p class="report-section-title">${t("weekly_log_title")}</p>
         ${weeklyTableHtml(s.weekly)}
         ${monthlySummaryHtml(s.weekly)}
@@ -3867,15 +4281,15 @@ function renderReports(){
         ${statusObj.notes ? '<p class="report-section-title">' + t("specialist_note_title") + '</p><p style="font-size:13px">' + statusObj.notes + '</p>' : ''}
 
         <div class="report-actions">
-          <button class="accept" onclick="reportAction('accept','${s.id}')">${t("report_accept")}</button>
-          <button class="reject" onclick="reportAction('reject','${s.id}')">${t("report_reject")}</button>
+          <button class="accept" onclick="confirmReportAction('accept','${s.id}', this)">${t("report_accept")}</button>
+          <button class="reject" onclick="confirmReportAction('reject','${s.id}', this)">${t("report_reject")}</button>
           <button onclick="toggleReportEdit()">${t("report_edit")}</button>
           <button onclick="window.print()">${t("report_print")}</button>
         </div>
 
         <div class="report-edit-box" id="report-edit-box" style="display:none">
           <textarea id="report-edit-text" placeholder="${t("report_edit_placeholder")}">${statusObj.notes || ""}</textarea>
-          <button onclick="saveReportEdit('${s.id}')" style="margin-top:8px">${t("save_edit_button")}</button>
+          <button onclick="saveReportEdit('${s.id}', this)" style="margin-top:8px">${t("save_edit_button")}</button>
         </div>
       `;
       return;
@@ -3915,12 +4329,31 @@ function toggleReportEdit(){
   box.style.display = box.style.display === "none" ? "block" : "none";
 }
 
-function saveReportEdit(studentId){
+function saveReportEdit(studentId, btn){
   var text = document.getElementById("report-edit-text").value;
-  reportAction("edit", studentId, text);
+  reportAction("edit", studentId, text, btn);
 }
 
-function reportAction(action, studentId, notes){
+/* قبول/رفض التقرير عملية مهمة — نطلب تأكيد قبل التنفيذ */
+function confirmReportAction(action, studentId, btn){
+  var isAccept = action === "accept";
+  showConfirm(
+    t(isAccept ? "confirm_accept_title" : "confirm_reject_title"),
+    t(isAccept ? "confirm_accept_text" : "confirm_reject_text"),
+    { danger: !isAccept }
+  ).then(function(confirmed){
+    if(confirmed) reportAction(action, studentId, "", btn);
+  });
+}
+
+function reportAction(action, studentId, notes, btn){
+  var originalHtml = null;
+  if(btn){
+    originalHtml = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span>' + btn.textContent;
+  }
+
   fetch("/report-action", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -3931,10 +4364,22 @@ function reportAction(action, studentId, notes){
     if(data.ok){
       REPORT_STATUS[data.student_id] = data.status;
       renderReports();
+      var toastKey = action === "accept" ? "toast_report_accepted"
+        : action === "reject" ? "toast_report_rejected"
+        : "toast_report_edited";
+      showToast(t(toastKey), "success");
+    } else {
+      showToast(t("toast_report_error"), "error");
     }
   })
   .catch(function(){
-    alert(t("report_action_error"));
+    showToast(t("toast_report_error"), "error");
+  })
+  .finally(function(){
+    if(btn && originalHtml !== null){
+      btn.disabled = false;
+      btn.innerHTML = originalHtml;
+    }
   });
 }
 
