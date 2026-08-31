@@ -42,6 +42,9 @@
 
   --gradient-brand:linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
   --gradient-aura:linear-gradient(135deg, var(--teal) 0%, var(--accent) 100%);
+  --gradient-hero:linear-gradient(180deg, #eaf5f7 0%, #eef7f4 45%, var(--bg) 100%);
+  --gradient-hero-radial:radial-gradient(1100px 520px at 50% -8%, #d9edf3 0%, rgba(217,237,243,0) 62%);
+  --gradient-text:linear-gradient(100deg, var(--teal-dark) 0%, var(--teal) 55%, var(--accent) 100%);
 
   --shadow-sm:0 2px 8px rgba(15,60,55,.06);
   --shadow-md:0 8px 24px rgba(15,60,55,.10);
@@ -74,6 +77,9 @@
 
   --gradient-brand:linear-gradient(135deg, var(--teal) 0%, #2c8477 100%);
   --gradient-aura:linear-gradient(135deg, var(--teal) 0%, var(--accent-dark) 100%);
+  --gradient-hero:linear-gradient(180deg, #0f2523 0%, #0e211e 45%, var(--bg) 100%);
+  --gradient-hero-radial:radial-gradient(1100px 520px at 50% -8%, rgba(69,179,164,.16) 0%, rgba(69,179,164,0) 62%);
+  --gradient-text:linear-gradient(100deg, var(--teal-dark) 0%, var(--teal) 55%, var(--accent) 100%);
 
   --shadow-sm:0 2px 8px rgba(0,0,0,.25);
   --shadow-md:0 8px 24px rgba(0,0,0,.32);
@@ -202,33 +208,49 @@ button{
 ========================= */
 
 #home{
-  align-items:center;
-  justify-content:center;
   padding:25px;
+  background:var(--gradient-hero-radial), var(--gradient-hero);
 }
 
 .home-container{
   width:100%;
   max-width:1000px;
+  margin:0 auto;
   text-align:center;
 }
 
 .home-logo{
-  margin-bottom:35px;
+  margin-bottom:30px;
 }
 
 .home-logo .logo-icon{
   width:112px;
   height:112px;
   font-size:36px;
+  box-shadow:var(--shadow-md);
 }
 
 .home-logo h1{
-  font-size:38px;
+  font-size:44px;
+  letter-spacing:-.5px;
+  background:var(--gradient-text);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:var(--teal-dark);
 }
 
 .home-logo p{
-  font-size:17px;
+  display:inline-block;
+  margin-top:10px;
+  font-size:15px;
+  font-weight:700;
+  color:var(--teal-dark);
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:7px 18px;
+  box-shadow:var(--shadow-sm);
 }
 
 .mission{
@@ -265,27 +287,48 @@ button{
 }
 
 .choose-title{
-  font-size:18px;
-  font-weight:bold;
-  margin-bottom:15px;
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:18px;
 }
 
 .role-cards{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px;
+  gap:20px;
   max-width:700px;
   margin:auto;
 }
 
 .role-card{
+  position:relative;
   border:1px solid var(--line);
   background:var(--white);
   border-radius:20px;
-  padding:28px 20px;
+  padding:30px 24px;
   transition:transform .2s, box-shadow .2s, border-color .2s;
   text-align:right;
   box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+
+.role-card::after{
+  content:"←";
+  position:absolute;
+  top:26px;
+  left:22px;
+  color:var(--teal);
+  font-size:18px;
+  opacity:0;
+  transform:translateX(-6px);
+  transition:opacity .2s, transform .2s;
+}
+
+[dir="ltr"] .role-card::after{
+  content:"→";
+  left:auto;
+  right:22px;
+  transform:translateX(6px);
 }
 
 .role-card:hover{
@@ -294,17 +337,27 @@ button{
   box-shadow:var(--shadow-md);
 }
 
+.role-card:hover::after{
+  opacity:1;
+  transform:translateX(0);
+}
+
 .role-icon{
-  width:52px;
-  height:52px;
-  border-radius:15px;
+  width:58px;
+  height:58px;
+  border-radius:16px;
   background:var(--gradient-brand);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:25px;
-  margin-bottom:14px;
+  font-size:27px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow-sm);
   transition:transform .2s;
+}
+
+.role-card:nth-child(2) .role-icon{
+  background:var(--gradient-aura);
 }
 
 .role-card:hover .role-icon{
@@ -313,6 +366,7 @@ button{
 
 .role-card h3{
   margin:0 0 6px;
+  font-size:18px;
   color:var(--teal-dark);
 }
 
@@ -336,6 +390,7 @@ button{
 .login-box{
   width:100%;
   max-width:400px;
+  margin:0 auto;
   background:var(--white);
   border:1px solid var(--line);
   border-radius:22px;
@@ -1231,6 +1286,217 @@ a:focus-visible,
 }
 
 /* =========================
+   FORGOT PASSWORD LINK
+========================= */
+
+.forgot-link{
+  display:block;
+  width:100%;
+  background:none;
+  border:0;
+  padding:0;
+  margin:-6px 0 18px;
+  text-align:left;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--teal);
+}
+
+[dir="ltr"] .forgot-link{
+  text-align:right;
+}
+
+.forgot-link:hover{
+  color:var(--teal-dark);
+  text-decoration:underline;
+}
+
+/* =========================
+   HOME: HOW IT WORKS
+========================= */
+
+.how-it-works{
+  max-width:900px;
+  margin:0 auto 35px;
+}
+
+.how-it-works-title{
+  font-size:15px;
+  font-weight:800;
+  color:var(--muted);
+  letter-spacing:.3px;
+  margin-bottom:16px;
+}
+
+.how-steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.how-step{
+  position:relative;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px 18px;
+  text-align:center;
+  box-shadow:var(--shadow-sm);
+  transition:transform .2s, box-shadow .2s;
+}
+
+.how-step:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-md);
+}
+
+.how-step-num{
+  position:absolute;
+  top:12px;
+  inset-inline-start:14px;
+  font-size:11px;
+  font-weight:800;
+  color:var(--teal);
+  background:var(--teal-light);
+  border-radius:20px;
+  padding:2px 9px;
+}
+
+.how-step-icon{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.how-step h4{
+  margin:0 0 6px;
+  font-size:14.5px;
+  color:var(--teal-dark);
+}
+
+.how-step p{
+  margin:0;
+  font-size:12.5px;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* =========================
+   SITE FOOTER
+========================= */
+
+.site-footer{
+  max-width:1000px;
+  margin:45px auto 0;
+  padding-top:28px;
+  border-top:1px solid var(--line);
+}
+
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+  margin-bottom:14px;
+}
+
+.footer-link{
+  background:none;
+  border:0;
+  padding:4px 0;
+  font-size:13px;
+  font-weight:700;
+  color:var(--muted);
+}
+
+.footer-link:hover{
+  color:var(--teal-dark);
+  text-decoration:underline;
+}
+
+.footer-copy{
+  text-align:center;
+  font-size:11.5px;
+  color:var(--muted);
+  opacity:.8;
+}
+
+/* =========================
+   INFO MODAL (عن المنصة / تواصل معنا / الخصوصية)
+========================= */
+
+#info-modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(8,18,16,.5);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  z-index:210;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .18s ease, visibility .18s ease;
+  padding:20px;
+}
+
+#info-modal-backdrop.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.info-modal-box{
+  background:var(--white);
+  border-radius:18px;
+  box-shadow:var(--shadow-lg);
+  padding:28px;
+  width:100%;
+  max-width:440px;
+  max-height:80vh;
+  overflow-y:auto;
+  text-align:right;
+  transform:scale(.95);
+  transition:transform .18s ease;
+}
+
+#info-modal-backdrop.open .info-modal-box{
+  transform:scale(1);
+}
+
+.info-modal-title{
+  font-size:18px;
+  font-weight:800;
+  margin:0 0 14px;
+  color:var(--teal-dark);
+}
+
+.info-modal-text{
+  font-size:13.5px;
+  color:var(--text);
+  line-height:1.9;
+  white-space:pre-line;
+}
+
+.info-modal-close{
+  display:block;
+  margin:20px auto 0;
+  background:var(--gradient-brand);
+  color:white;
+  border:0;
+  border-radius:11px;
+  padding:11px 26px;
+  font-size:14px;
+  font-weight:700;
+  box-shadow:var(--shadow-sm);
+}
+
+.info-modal-close:hover{
+  filter:brightness(1.06);
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -1631,6 +1897,10 @@ a:focus-visible,
     grid-template-columns:1fr;
   }
 
+  .how-steps{
+    grid-template-columns:1fr;
+  }
+
   .home-logo h1{
     font-size:30px;
   }
@@ -1759,6 +2029,15 @@ a:focus-visible,
   </div>
 </div>
 
+<!-- نافذة معلومات عامة (عن المنصة / تواصل معنا / الخصوصية) — عامة بكل صفحات النظام -->
+<div id="info-modal-backdrop" onclick="if(event.target===this) closeInfoModal()">
+  <div class="info-modal-box">
+    <p class="info-modal-title" id="info-modal-title"></p>
+    <p class="info-modal-text" id="info-modal-text"></p>
+    <button class="info-modal-close" type="button" onclick="closeInfoModal()" data-i18n="info_modal_close">حسنًا</button>
+  </div>
+</div>
+
 <!-- ==================================================
      HOME
 ================================================== -->
@@ -1828,6 +2107,46 @@ a:focus-visible,
     </button>
 
   </div>
+
+  <div class="how-it-works">
+
+    <div class="how-it-works-title" data-i18n="how_it_works_title">كيف تعمل المنصة؟</div>
+
+    <div class="how-steps">
+
+      <div class="how-step">
+        <span class="how-step-num">١</span>
+        <div class="how-step-icon">📋</div>
+        <h4 data-i18n="how_step1_title">رصد الملاحظات</h4>
+        <p data-i18n="how_step1_text">يسجّل الأخصائي ملاحظات أسبوعية بسيطة عن كل طالب.</p>
+      </div>
+
+      <div class="how-step">
+        <span class="how-step-num">٢</span>
+        <div class="how-step-icon">🤖</div>
+        <h4 data-i18n="how_step2_title">تحليل ذكي</h4>
+        <p data-i18n="how_step2_text">يحلل أورا البيانات ويكتشف أنماط التغيّر مبكرًا.</p>
+      </div>
+
+      <div class="how-step">
+        <span class="how-step-num">٣</span>
+        <div class="how-step-icon">🔔</div>
+        <h4 data-i18n="how_step3_title">تنبيه ومتابعة</h4>
+        <p data-i18n="how_step3_text">تصل تنبيهات واضحة للأخصائي وولي الأمر لاتخاذ إجراء.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <button class="footer-link" type="button" onclick="openInfoModal('about')" data-i18n="footer_about">من نحن</button>
+      <button class="footer-link" type="button" onclick="openInfoModal('contact')" data-i18n="footer_contact">تواصل معنا</button>
+      <button class="footer-link" type="button" onclick="openInfoModal('privacy')" data-i18n="footer_privacy">سياسة الخصوصية</button>
+    </div>
+    <div class="footer-copy" data-i18n="footer_rights">© 2026 البصيرة الرقمية. جميع الحقوق محفوظة.</div>
+  </footer>
 
 </div>
 
@@ -1910,6 +2229,8 @@ placeholder="••••••••"
 
 </div>
 
+<button type="button" class="forgot-link" onclick="forgotPassword()" data-i18n="forgot_password">نسيت كلمة المرور؟</button>
+
 <button
 class="primary"
 onclick="specialistLogin()">
@@ -1984,6 +2305,8 @@ placeholder="••••••••"
 >
 
 </div>
+
+<button type="button" class="forgot-link" onclick="forgotPassword()" data-i18n="forgot_password">نسيت كلمة المرور؟</button>
 
 <button
 class="primary"
@@ -2789,6 +3112,23 @@ var TRANSLATIONS = {
     role_parent_title: "ولي الأمر",
     role_parent_desc: "متابعة مستوى طفلك والاطلاع على مؤشرات تقدمه بطريقة بسيطة وآمنة.",
 
+    how_it_works_title: "كيف تعمل المنصة؟",
+    how_step1_title: "رصد الملاحظات",
+    how_step1_text: "يسجّل الأخصائي ملاحظات أسبوعية بسيطة عن كل طالب.",
+    how_step2_title: "تحليل ذكي",
+    how_step2_text: "يحلل أورا البيانات ويكتشف أنماط التغيّر مبكرًا.",
+    how_step3_title: "تنبيه ومتابعة",
+    how_step3_text: "تصل تنبيهات واضحة للأخصائي وولي الأمر لاتخاذ إجراء.",
+
+    footer_about: "من نحن",
+    footer_contact: "تواصل معنا",
+    footer_privacy: "سياسة الخصوصية",
+    footer_rights: "© 2026 البصيرة الرقمية. جميع الحقوق محفوظة.",
+    info_modal_close: "حسنًا",
+    about_text: "البصيرة الرقمية منصة ذكاء اصطناعي تساعد المدارس على اكتشاف التغيرات السلوكية والأكاديمية لدى الطلبة مبكرًا، عبر تحليل الملاحظات الأسبوعية وتنبيه الأخصائيين وأولياء الأمور قبل أن تتطور الحالة. المشروع مقدَّم ضمن مبادرة ريادية تعليمية في محافظة ظفار، بهدف دعم صحة الطلبة النفسية والأكاديمية بأدوات بسيطة وآمنة.",
+    contact_text: "يسعدنا تواصلكم معنا:\n📧 البريد الإلكتروني: info@albasira-digital.om\n📍 محافظة ظفار، سلطنة عُمان\n\nهذه بيانات تواصل تجريبية لأغراض العرض التقديمي.",
+    privacy_text: "نحرص في البصيرة الرقمية على خصوصية بيانات الطلبة: لا يمكن لولي الأمر الاطلاع إلا على بيانات ابنه/ابنته المرتبطة بحسابه فقط، وتُستخدم البيانات حصريًا لدعم المتابعة التربوية داخل المدرسة، دون مشاركتها مع أي جهة خارجية.",
+
     back: "← العودة",
     specialist_login_title: "دخول الأخصائي",
     specialist_login_sub: "الوصول المصرح إلى بيانات الطلبة",
@@ -2798,6 +3138,8 @@ var TRANSLATIONS = {
     role_psych: "أخصائية نفسية",
     field_email: "البريد الإلكتروني",
     field_password: "كلمة المرور",
+    forgot_password: "نسيت كلمة المرور؟",
+    forgot_password_msg: "لإعادة تعيين كلمة المرور، يرجى التواصل مع إدارة النظام في مدرستك.",
     login_button: "تسجيل الدخول",
     demo_label: "نموذج تجريبي:",
     specialist_demo_text: "هذه الواجهة تحاكي نظام الدخول. في النظام الفعلي يتم التحقق من الحساب من خلال Backend وقاعدة بيانات آمنة.",
@@ -3000,6 +3342,23 @@ var TRANSLATIONS = {
     role_parent_title: "Parent",
     role_parent_desc: "Track your child's level and view simple, secure progress indicators.",
 
+    how_it_works_title: "How does the platform work?",
+    how_step1_title: "Log observations",
+    how_step1_text: "The specialist logs simple weekly notes for each student.",
+    how_step2_title: "Smart analysis",
+    how_step2_text: "Aura analyzes the data and detects patterns of change early.",
+    how_step3_title: "Alert & follow-up",
+    how_step3_text: "Clear alerts reach the specialist and parent so they can act.",
+
+    footer_about: "About Us",
+    footer_contact: "Contact Us",
+    footer_privacy: "Privacy Policy",
+    footer_rights: "© 2026 Digital Insight. All rights reserved.",
+    info_modal_close: "OK",
+    about_text: "Digital Insight is an AI platform that helps schools detect early behavioral and academic changes in students, by analyzing weekly observations and alerting specialists and parents before a case escalates. The project is presented as part of an educational entrepreneurship initiative in Dhofar, Oman, aiming to support students' mental and academic wellbeing with simple, secure tools.",
+    contact_text: "We'd love to hear from you:\n📧 Email: info@albasira-digital.om\n📍 Dhofar Governorate, Sultanate of Oman\n\nThis is sample contact information for the demo presentation.",
+    privacy_text: "At Digital Insight, we protect student privacy: a parent can only view the data of their own child linked to their account, and data is used exclusively to support educational follow-up within the school, never shared with outside parties.",
+
     back: "← Back",
     specialist_login_title: "Specialist Login",
     specialist_login_sub: "Authorized access to student data",
@@ -3009,6 +3368,8 @@ var TRANSLATIONS = {
     role_psych: "Psychological Specialist",
     field_email: "Email",
     field_password: "Password",
+    forgot_password: "Forgot password?",
+    forgot_password_msg: "To reset your password, please contact your school's system administrator.",
     login_button: "Log In",
     demo_label: "Demo:",
     specialist_demo_text: "This screen simulates the login system. In the real system, the account is verified through a backend and a secure database.",
@@ -3288,6 +3649,36 @@ function closeConfirm(result){
     _confirmResolve(result);
     _confirmResolve = null;
   }
+}
+
+/* =========================================
+   نسيت كلمة المرور
+========================================= */
+
+function forgotPassword(){
+  showToast(t("forgot_password_msg"), "info");
+}
+
+/* =========================================
+   نافذة معلومات عامة (عن المنصة / تواصل معنا / الخصوصية)
+========================================= */
+
+var INFO_MODAL_CONTENT = {
+  about: { titleKey: "footer_about", textKey: "about_text" },
+  contact: { titleKey: "footer_contact", textKey: "contact_text" },
+  privacy: { titleKey: "footer_privacy", textKey: "privacy_text" }
+};
+
+function openInfoModal(key){
+  var entry = INFO_MODAL_CONTENT[key];
+  if(!entry) return;
+  document.getElementById("info-modal-title").textContent = t(entry.titleKey);
+  document.getElementById("info-modal-text").textContent = t(entry.textKey);
+  document.getElementById("info-modal-backdrop").classList.add("open");
+}
+
+function closeInfoModal(){
+  document.getElementById("info-modal-backdrop").classList.remove("open");
 }
 
 /* =========================================
