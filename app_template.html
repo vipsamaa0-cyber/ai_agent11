@@ -260,18 +260,54 @@ button{
   flex-direction:column;
 }
 
-.landing-grid-bg{
+.landing-glow-bg{
   position:absolute;
   inset:0;
   z-index:0;
   pointer-events:none;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size:44px 44px;
-  opacity:.45;
-  -webkit-mask-image:radial-gradient(ellipse 65% 55% at 50% 32%, black 35%, transparent 82%);
-  mask-image:radial-gradient(ellipse 65% 55% at 50% 32%, black 35%, transparent 82%);
+  overflow:hidden;
+}
+
+.glow-blob{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(85px);
+  opacity:.16;
+}
+
+:root[data-theme="dark"] .glow-blob{
+  opacity:.30;
+  filter:blur(95px);
+}
+
+.glow-blob.blob-1{
+  width:480px;
+  height:480px;
+  top:-150px;
+  inset-inline-start:-110px;
+  background:var(--teal);
+}
+
+.glow-blob.blob-2{
+  width:520px;
+  height:520px;
+  bottom:-190px;
+  inset-inline-end:-130px;
+  background:var(--cyan);
+}
+
+.glow-blob.blob-3{
+  width:420px;
+  height:420px;
+  top:38%;
+  inset-inline-start:50%;
+  transform:translate(-50%,-50%);
+  background:var(--accent);
+  opacity:.10;
+}
+
+:root[data-theme="dark"] .glow-blob.blob-3{
+  opacity:.20;
 }
 
 .landing-center{
@@ -692,6 +728,114 @@ button{
 .logout:hover{
   background:var(--red);
   color:white;
+}
+
+/* =========================
+   DASHBOARD STUDENT SEARCH
+========================= */
+
+.dashboard-search{
+  position:relative;
+  flex:1;
+  max-width:340px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:9px 14px;
+  transition:border-color .15s, box-shadow .15s;
+}
+
+.dashboard-search:focus-within{
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px var(--teal-light);
+}
+
+.dashboard-search svg{
+  width:16px;
+  height:16px;
+  color:var(--muted);
+  flex-shrink:0;
+}
+
+.dashboard-search input{
+  border:0;
+  background:none;
+  outline:none;
+  color:var(--text);
+  font-size:13px;
+  width:100%;
+  font-family:inherit;
+}
+
+.dashboard-search input::placeholder{
+  color:var(--muted);
+}
+
+.dashboard-search-results{
+  position:absolute;
+  top:calc(100% + 8px);
+  inset-inline:0;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow-md);
+  max-height:340px;
+  overflow-y:auto;
+  z-index:40;
+  display:none;
+}
+
+.dashboard-search-results.open{
+  display:block;
+}
+
+.dashboard-search-result{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:11px 14px;
+  cursor:pointer;
+  border-bottom:1px solid var(--line);
+  text-align:start;
+}
+
+.dashboard-search-result:last-child{
+  border-bottom:0;
+}
+
+.dashboard-search-result:hover{
+  background:var(--teal-light);
+}
+
+.dashboard-search-result-name{
+  font-weight:700;
+  font-size:13px;
+  color:var(--text);
+}
+
+.dashboard-search-result-meta{
+  font-size:11.5px;
+  color:var(--muted);
+  white-space:nowrap;
+}
+
+.dashboard-search-empty{
+  padding:16px;
+  text-align:center;
+  font-size:12.5px;
+  color:var(--muted);
+}
+
+@media(max-width:700px){
+  .dashboard-search{
+    max-width:none;
+    order:3;
+    flex-basis:100%;
+  }
 }
 
 .container{
@@ -2075,6 +2219,7 @@ a:focus-visible,
 
   .app-header{
     padding:15px;
+    flex-wrap:wrap;
   }
 }
 /* -------- REPORT CARD -------- */
@@ -2197,7 +2342,11 @@ a:focus-visible,
 
 <section id="home" class="page active">
 
-<div class="landing-grid-bg"></div>
+<div class="landing-glow-bg">
+  <span class="glow-blob blob-1"></span>
+  <span class="glow-blob blob-2"></span>
+  <span class="glow-blob blob-3"></span>
+</div>
 
 <div class="landing-center">
 
@@ -2490,6 +2639,21 @@ onclick="parentLogin()">
 <span data-i18n="home_tagline">نلاحظ ما قد لا يُلاحظ.</span>
 </div>
 
+</div>
+
+<div class="dashboard-search">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+  <input
+    type="text"
+    id="student-search-input"
+    data-i18n-placeholder="search_student_placeholder"
+    placeholder="ابحث عن طالب..."
+    oninput="handleStudentSearch(this.value)"
+    onfocus="if(this.value) handleStudentSearch(this.value)"
+    onkeydown="if(event.key==='Enter') openFirstSearchResult()"
+    onblur="setTimeout(function(){ var r=document.getElementById('student-search-results'); if(r) r.classList.remove('open'); }, 150)"
+  >
+  <div id="student-search-results" class="dashboard-search-results"></div>
 </div>
 
 <div>
@@ -3293,6 +3457,8 @@ var TRANSLATIONS = {
 
     specialist_pill: "الأخصائية",
     logout: "خروج",
+    search_student_placeholder: "ابحث عن طالب...",
+    search_no_results: "لا توجد نتائج مطابقة.",
     tab_alerts: "التنبيهات",
     tab_students: "الطلاب",
     tab_overview: "نظرة عامة",
@@ -3524,6 +3690,8 @@ var TRANSLATIONS = {
 
     specialist_pill: "Specialist",
     logout: "Log Out",
+    search_student_placeholder: "Search for a student...",
+    search_no_results: "No matching results.",
     tab_alerts: "Alerts",
     tab_students: "Students",
     tab_overview: "Overview",
@@ -4354,6 +4522,64 @@ function aiRecommendHtml(statusKey){
       '<div class="ai-recommend-text">' + t("ai_recommend_" + key) + '</div>' +
     '</div>'
   );
+}
+
+/* =========================================
+   بحث الأخصائي عن أي طالب
+========================================= */
+
+function handleStudentSearch(query){
+  var box = document.getElementById("student-search-results");
+  if(!box) return;
+
+  var q = query.trim().toLowerCase();
+  if(!q){
+    box.classList.remove("open");
+    box.innerHTML = "";
+    return;
+  }
+
+  var matches = STUDENTS.filter(function(s){
+    return (s.name && s.name.toLowerCase().indexOf(q) !== -1)
+      || (s.nameEn && s.nameEn.toLowerCase().indexOf(q) !== -1);
+  }).slice(0, 8);
+
+  if(matches.length === 0){
+    box.innerHTML = '<div class="dashboard-search-empty">' + t("search_no_results") + "</div>";
+  } else {
+    box.innerHTML = matches.map(function(s){
+      return (
+        '<div class="dashboard-search-result" onmousedown="selectSearchResult(\'' + s.id + '\')">' +
+          '<span class="dashboard-search-result-name">' + escapeHtml(sName(s)) + "</span>" +
+          '<span class="dashboard-search-result-meta">' + escapeHtml(sClass(s)) + "</span>" +
+        "</div>"
+      );
+    }).join("");
+  }
+
+  box.classList.add("open");
+}
+
+function selectSearchResult(id){
+  var input = document.getElementById("student-search-input");
+  var box = document.getElementById("student-search-results");
+  if(input) input.value = "";
+  if(box){ box.classList.remove("open"); box.innerHTML = ""; }
+  openStudent(id);
+}
+
+function openFirstSearchResult(){
+  var input = document.getElementById("student-search-input");
+  if(!input) return;
+  var q = input.value.trim().toLowerCase();
+  if(!q) return;
+
+  var match = STUDENTS.filter(function(s){
+    return (s.name && s.name.toLowerCase().indexOf(q) !== -1)
+      || (s.nameEn && s.nameEn.toLowerCase().indexOf(q) !== -1);
+  })[0];
+
+  if(match) selectSearchResult(match.id);
 }
 
 function openStudent(id){
